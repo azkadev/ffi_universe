@@ -1,0 +1,20 @@
+name: 'ffi_universe'
+description: Standarization FFI will bring support cross platform same style api for boost project
+version: '0.0.0'
+homepage: 'https://youtube.com/@azkadev'
+repository: 'https://github.com/azkadev/ffi_universe'
+issue_tracker: 'https://t.me/DEVELOPER_GLOBAL_PUBLIC'
+documentation: 'https://youtube.com/@azkadev'
+
+funding:
+  - 'https://github.com/sponsors/azkadev'
+  - 'https://github.com/sponsors/generalfoss'
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+dependencies: {}
+dev_dependencies:
+  lints: '^5.0.0'
+  test: 'any'
+dependency_overrides:
+  pointycastle: '3.8.0'
+  mime: '^2.0.0'
