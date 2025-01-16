@@ -27,9 +27,10 @@ class NoGeneric {
 /// If a class which is annotead with [noGeneric] is extended or implemented,
 /// the derived class MUST NOT impose a type argument!
 const NoGeneric noGeneric = NoGeneric();
+
 ///
 class NotConstructible {
-///
+  ///
   const NotConstructible();
 }
 
@@ -40,7 +41,7 @@ const NotConstructible notConstructible = NotConstructible();
 
 ///
 class Unsized {
- ///
+  ///
   const Unsized();
 }
 
@@ -51,6 +52,7 @@ class Unsized {
 /// Consequently, [Pointer.elementAt] is not available and will also throw an exception.
 const Unsized unsized = Unsized();
 
+///
 class DartRepresentationOf {
   /// Represents the Dart type corresponding to a [NativeType].
   ///

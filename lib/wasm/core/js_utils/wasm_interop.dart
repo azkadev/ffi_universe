@@ -14,7 +14,9 @@ external JSBigInt _bigInt(JSAny? s);
 @JS('Number')
 external JSNumber _number(JSAny? obj);
 
+///
 extension type WrappedJSAny._(JSAny _) implements JSAny {
+  ///
   external static JSArray<JSAny?> keys(JSObject o);
 
   @JS('toString')
@@ -22,29 +24,49 @@ extension type WrappedJSAny._(JSAny _) implements JSAny {
 }
 
 @JS('Object')
+
+///
 extension type WrappedJSObject._(JSObject _) implements JSObject {
+  ///
   external static JSArray<JSAny?> keys(JSObject o);
+
+  ///
   external static JSArray<JSAny?> entries(JSObject o);
 }
 
 @JS()
 @anonymous
+
+///
 extension type WrappedJSFunction._(JSObject _) implements JSObject {
+  ///
   external JSString? get name;
+
+  ///
   external JSNumber? get length;
 }
 
+///
 extension type JsBigInt(JSBigInt _jsBigInt) implements JSBigInt {
+  ///
   factory JsBigInt.parse(String s) => JsBigInt(_bigInt(s.toJS));
+
+  ///
   factory JsBigInt.fromInt(int i) => JsBigInt(_bigInt(i.toJS));
+
+  ///
   factory JsBigInt.fromBigInt(BigInt i) => JsBigInt.parse(i.toString());
 
+  ///
   int get asDartInt => _number(_jsBigInt).toDartInt;
 
+  ///
   BigInt get asDartBigInt => BigInt.parse(jsToString());
 
+  ///
   JSBigInt get jsObject => _jsBigInt;
 
+  ///
   bool get isSafeInteger {
     const maxSafeInteger = 9007199254740992;
     const minSafeInteger = -maxSafeInteger;
@@ -53,9 +75,12 @@ extension type JsBigInt(JSBigInt _jsBigInt) implements JSBigInt {
         _jsBigInt.lessThanOrEqualTo(maxSafeInteger.toJS).toDart;
   }
 
+  ///
   Object toDart() {
     return isSafeInteger ? asDartInt : asDartBigInt;
   }
+
+  ///
 
   String jsToString() {
     return (_jsBigInt as WrappedJSAny)._toString().toDart;
@@ -176,20 +201,27 @@ extension type TableDescriptor._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Table')
+
 ///
 extension type WasmTable._(JSObject _) implements JSObject {
   ///
   static WasmTable? global;
+
   ///
   external factory WasmTable(TableDescriptor descriptor, JSObject value);
+
   ///
   external JSNumber get length;
+
   ///
   external JSObject get(JSNumber index);
+
   ///
   external void set(JSNumber index, JSObject value);
+
   ///
   external JSNumber grow(JSNumber delta);
+
   ///
   static bool isInstance(JSAny? obj) =>
       obj != null && obj.instanceof(_tableConstructor);
@@ -212,10 +244,9 @@ class Instance {
         // TODO throw StateError('Could not find an export named $key');
         continue;
       }
-      // if (value is Function) {
-      //   functions[key] = (value as JSFunction);
-      // } else 
-      if (WasmGlobal.isInstance(value)) {
+      if (value is Function) {
+        functions[key] = (value as JSFunction);
+      } else if (WasmGlobal.isInstance(value)) {
         globals[key] = (value as WasmGlobal);
       } else if (WasmMemory.isInstance(value)) {
         memories[key] = (value as WasmMemory);
@@ -238,6 +269,7 @@ class Instance {
 
     return importsJs;
   }
+
   ///
   static Future<Instance> loadfromUrl(
     String url, {

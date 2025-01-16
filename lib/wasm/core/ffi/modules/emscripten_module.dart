@@ -1,5 +1,5 @@
 @JS()
-library emscripten_module;
+library;
 
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
@@ -14,15 +14,20 @@ import 'module.dart';
 
 @JS()
 @anonymous
-extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
-  external JSUint8Array? get wasmBinary;
-  // ignore: non_constant_identifier_names
-  external JSUint8Array? get HEAPU8;
 
+///
+extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
+  ///
+  external JSUint8Array? get wasmBinary;
+
+  /// ignore: non_constant_identifier_names
+  external JSUint8Array? get HEAPU8;
+  ////
   external JSObject? get asm; // Emscripten <3.1.44
+  ////
   external JSObject? get wasmExports; // Emscripten >=3.1.44
 
-  // Must have an unnamed factory constructor with named arguments.
+  /// Must have an unnamed factory constructor with named arguments.
   external factory EmscriptenModuleJs({JSUint8Array? wasmBinary});
 }
 
@@ -60,6 +65,7 @@ FunctionDescription _fromWasmFunction(String name, JSFunction func) {
   }
 }
 
+///
 typedef EmscriptenModuleFunc = JSPromise<JSObject?> Function();
 
 /// Documentation is in `emscripten_module_stub.dart`!
@@ -71,6 +77,8 @@ class EmscriptenModule extends Module {
     if (moduleFunction == null) {
       throw StateError('Could not find a emscripten module named $moduleName');
     }
+
+    ///
     return moduleFunction as EmscriptenModuleFunc;
   }
 

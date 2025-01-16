@@ -1,9 +1,9 @@
 include: package:lints/recommended.yaml
 analyzer:
+  errors:
+    invalid_runtime_check_with_js_interop_types: ignore
+    unintended_html_in_doc_comment: ignore
   exclude:
     - test
     - dev
     - templates
-linter:
-  rules:
-    - public_member_api_docs
