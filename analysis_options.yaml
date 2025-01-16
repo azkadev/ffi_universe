@@ -7,3 +7,6 @@ analyzer:
     - test
     - dev
     - templates
+linter:
+  rules:
+    - public_member_api_docs
