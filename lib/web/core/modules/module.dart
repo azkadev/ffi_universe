@@ -56,6 +56,12 @@ abstract class WasmSymbol {
 
   @override
   String toString() => '[address=$address\tname=$name]';
+
+  @override
+  bool operator ==(Object other) {
+    // TODO: implement ==
+    return super == other;
+  }
 }
 
 /// A global is a symbol exported by the WebAssembly,
@@ -63,10 +69,14 @@ abstract class WasmSymbol {
 @extra
 @sealed
 class Global extends WasmSymbol {
-  const Global({required int address, required String name})
-      : super(address: address, name: name);
+  ///
+  const Global({
+    required super.address,
+    required super.name,
+  });
 
   @override
+  // ignore: hash_and_equals
   bool operator ==(dynamic other) {
     if (other != null && other is Global) {
       return name == other.name && address == other.address;
@@ -89,12 +99,16 @@ class FunctionDescription extends WasmSymbol {
 
   /// The actual function.
   final Function function;
-  const FunctionDescription(
-      {required int tableIndex,
-      required String name,
-      required this.argumentCount,
-      required this.function})
-      : super(address: tableIndex, name: name);
+
+  ///
+  const FunctionDescription({
+    required int tableIndex,
+    required super.name,
+    required this.argumentCount,
+    required this.function,
+  }) : super(
+          address: tableIndex,
+        );
 
   @override
   int get hashCode => '$name$argumentCount$tableIndex'.hashCode;

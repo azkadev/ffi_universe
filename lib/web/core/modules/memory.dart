@@ -6,6 +6,7 @@ import '../ffi/types.dart';
 import '../internal/marshaller.dart';
 import '../../web_ffi_meta.dart';
 
+/// ffi_universe
 final Map<Type, int> sizeMap = {};
 
 /// Must be called with each type that extends Opaque before
@@ -72,16 +73,16 @@ class Memory implements Allocator {
   final Map<int, WasmSymbol> _symbolsByAddress;
 
   Memory._(this._module)
-      : _symbolsByAddress = new Map<int, WasmSymbol>.fromEntries(_module.exports
+      : _symbolsByAddress = Map<int, WasmSymbol>.fromEntries(_module.exports
             .map<MapEntry<int, WasmSymbol>>((WasmSymbol symbol) =>
-                new MapEntry<int, WasmSymbol>(symbol.address, symbol))),
-        _symbolsByName = new Map<String, WasmSymbol>.fromEntries(_module.exports
+                MapEntry<int, WasmSymbol>(symbol.address, symbol))),
+        _symbolsByName = Map<String, WasmSymbol>.fromEntries(_module.exports
             .map<MapEntry<String, WasmSymbol>>((WasmSymbol symbol) =>
-                new MapEntry<String, WasmSymbol>(symbol.name, symbol)));
+                MapEntry<String, WasmSymbol>(symbol.name, symbol)));
 
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
-    return new Pointer<T>.fromAddress(_module.malloc(byteCount), this);
+    return Pointer<T>.fromAddress(_module.malloc(byteCount), this);
   }
 
   @override
@@ -90,27 +91,39 @@ class Memory implements Allocator {
   }
 }
 
-Memory createMemory(Module module) => new Memory._(module);
+/// ffi_universe
+Memory createMemory(Module module) => Memory._(module);
 
+/// ffi_universe
 WasmSymbol symbolByAddress(Memory m, int address) {
   WasmSymbol? s = m._symbolsByAddress[address];
   if (s != null) {
     return s;
   } else {
-    throw new ArgumentError('Could not find symbol at $address!');
+    throw ArgumentError('Could not find symbol at $address!');
   }
 }
 
+/// ffi_universe
 WasmSymbol symbolByName(Memory m, String name) {
   WasmSymbol? s = m._symbolsByName[name];
   if (s != null) {
     return s;
   } else {
-    throw new ArgumentError('Could not find symbol $name!');
+    throw ArgumentError('Could not find symbol $name!');
   }
 }
 
 /// Used on [DynamicLibrary] creation to control if the therby newly created
 /// [Memory] object should be registered as [Memory.global].
 @extra
-enum MemoryRegisterMode { yes, no, onlyIfGlobalNotSet }
+enum MemoryRegisterMode {
+  ///
+  yes,
+
+  ///
+  no,
+
+  ///
+  onlyIfGlobalNotSet,
+}

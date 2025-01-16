@@ -1,10 +1,11 @@
+///
 class _Extra {
   const _Extra();
 }
 
 /// A class, field or method annotated with extra is present in `web_ffi`,
 /// but not in `dart:ffi`.
-const _Extra extra = const _Extra();
+const _Extra extra = _Extra();
 
 class _NoGeneric {
   const _NoGeneric();

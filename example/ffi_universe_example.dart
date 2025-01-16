@@ -2,6 +2,6 @@
 
 import 'package:ffi_universe/ffi_universe.dart';
 
-void main() { 
+void main() {
   print('awesome:');
 }

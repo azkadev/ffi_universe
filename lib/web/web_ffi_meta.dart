@@ -1,4 +1,4 @@
 /// This library contains and explains the annotations for `web_ffi`.
-library web_ffi_meta;
+library;
 
 export 'core/meta/meta.dart';
