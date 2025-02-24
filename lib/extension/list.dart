@@ -7,9 +7,9 @@ extension ListStringExtensionFFIUNIVERSE on List<String> {
   ///
   /// Convert
   ///
-  /// From = List<String> args[1] = ["hello"];
+  /// From = List\<String\> args[1] = ["hello"];
   ///
-  /// to = std::vector<char> argv[1] = {"hello"}
+  /// to = std::vector\<char\> argv[1] = {"hello"}
   ///
   Pointer<Pointer<Char>> toNativeVectorChar() {
     return VectorFfiUniverseUtils.fromListStringToVectorChar(
@@ -21,9 +21,9 @@ extension ListStringExtensionFFIUNIVERSE on List<String> {
   ///
   /// Convert
   ///
-  /// From = List<String> args[1] = ["hello"];
+  /// From = List\<String\> args[1] = ["hello"];
   ///
-  /// to = std::vector<string> argv[1] = {"hello"}
+  /// to = std::vector\<string\> argv[1] = {"hello"}
   ///
   Pointer<Pointer<Utf8>> toNativeVectorString() {
     return VectorFfiUniverseUtils.fromListStringToVectorString(

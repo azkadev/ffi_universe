@@ -8,9 +8,9 @@ class VectorFfiUniverseUtils {
   ///
   /// Convert
   ///
-  /// From = List<String> args[1] = ["hello"];
+  /// From = List\<String\> args[1] = ["hello"];
   ///
-  /// to = std::vector<char> argv[1] = {"hello"}
+  /// to = std::vector\<char\> argv[1] = {"hello"}
   ///
   static Pointer<Pointer<Char>> fromListStringToVectorChar({
     required List<String> strings,
@@ -27,9 +27,9 @@ class VectorFfiUniverseUtils {
   ///
   /// Convert
   ///
-  /// From = List<String> args[1] = ["hello"];
+  /// From = List\<String\> args[1] = ["hello"];
   ///
-  /// to = std::vector<string> argv[1] = {"hello"}
+  /// to = std::vector\<string\> argv[1] = {"hello"}
   ///
   static Pointer<Pointer<Utf8>> fromListStringToVectorString({
     required List<String> strings,
