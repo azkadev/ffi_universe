@@ -9,7 +9,6 @@ import '../types.dart';
 import 'module.dart';
 
 @extra
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class StandaloneWasmModule extends Module {
   final Instance _instance;

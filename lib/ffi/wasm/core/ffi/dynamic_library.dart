@@ -41,7 +41,6 @@ enum WasmType {
 /// Used on [DynamicLibrary] creation to control if the therby newly created
 /// [Memory] object should be registered as [Memory.global].
 @extra
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 enum GlobalMemory {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -121,13 +120,7 @@ class DynamicLibrary {
   /// Multiple loads of the same library file produces [DynamicLibrary] objects
   /// which are equal (`==`), but not [identical].
   @different
-  static Future<DynamicLibrary> open(
-    String modulePath, {
-    String? moduleName,
-    ModuleLoader? moduleLoader,
-    WasmType? wasmType,
-    GlobalMemory? useAsGlobal,
-  }) async {
+  static Future<DynamicLibrary> open(String modulePath, {String? moduleName, ModuleLoader? moduleLoader, WasmType? wasmType, GlobalMemory? useAsGlobal}) async {
     /// 64-bit wasm is not supported
     if (wasmType == WasmType.wasm64Standalone || wasmType == WasmType.wasm64Emscripten) {
       throw UnsupportedError('64-bit wasm is not supported');

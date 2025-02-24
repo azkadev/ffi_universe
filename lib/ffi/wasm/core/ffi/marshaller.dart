@@ -110,16 +110,20 @@ Object _toJsType(Object dartObject) {
 InvokeHelper _inferFromSignature(String signature) {
   final String returnType = signature.split('=>').last.trim();
   if (returnType.startsWith(pointerPointerPointerPrefix)) {
-    throw const MarshallingException('Nesting pointers is only supported to a deepth of 2!'
-        '\nThis means that you can write Pointer<Pointer<X>> but not Pointer<Pointer<Pointer<X>>>, ...');
+    throw const MarshallingException(
+      'Nesting pointers is only supported to a deepth of 2!'
+      '\nThis means that you can write Pointer<Pointer<X>> but not Pointer<Pointer<Pointer<X>>>, ...',
+    );
   }
   final InvokeHelper? h = _knownTypes[returnType];
   if (h != null) {
     return h;
   } else {
     if (returnType.startsWith(pointerNativeFunctionPrefix)) {
-      throw const MarshallingException('Using pointers to native functions as return type is only allowed if the type of the native function is dynamic!'
-          '\nThis means that only Pointer<NativeFunction<dynamic>> is allowed!');
+      throw const MarshallingException(
+        'Using pointers to native functions as return type is only allowed if the type of the native function is dynamic!'
+        '\nThis means that only Pointer<NativeFunction<dynamic>> is allowed!',
+      );
     } else {
       throw MarshallingException('Unknown type $returnType (infered from $signature), all marshallable types: ${listKnownTypes()}');
     }
@@ -127,18 +131,12 @@ InvokeHelper _inferFromSignature(String signature) {
 }
 
 @visibleForTesting
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 List<String> listKnownTypes() => List<String>.of(_knownTypes.keys, growable: false);
 
 final Map<String, InvokeHelper> _knownTypes = {typeString<int>(): const InvokeHelper<int>(null, null), typeString<double>(): const InvokeHelper<double>(null, null), typeString<bool>(): const InvokeHelper<bool>(null, null), typeString<void>(): const InvokeHelper<void>(null, null)};
 
-final Map<String, Function> _knownTypes2 = {
-  typeString<int>(): (Object o, Memory b) => _toDartType<int>(o, b),
-  typeString<double>(): (Object o, Memory b) => _toDartType<double>(o, b),
-  typeString<bool>(): (Object o, Memory b) => _toDartType<bool>(o, b),
-  typeString<void>(): (Object o, Memory b) => _toDartType<void>(o, b),
-};
+final Map<String, Function> _knownTypes2 = {typeString<int>(): (Object o, Memory b) => _toDartType<int>(o, b), typeString<double>(): (Object o, Memory b) => _toDartType<double>(o, b), typeString<bool>(): (Object o, Memory b) => _toDartType<bool>(o, b), typeString<void>(): (Object o, Memory b) => _toDartType<void>(o, b)};
 
 void _registerNativeMarshallerType<T extends NativeType>() {
   _knownTypes[typeString<Pointer<T>>()] = InvokeHelper<Pointer<T>>(null, null);

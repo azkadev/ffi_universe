@@ -14,7 +14,6 @@ import 'module.dart';
 
 @JS()
 @anonymous
-
 ///
 extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
   ///
@@ -32,7 +31,8 @@ extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
 }
 
 const String _github = 'https://github.com/vm75/wasm_ffi';
-String _adu(WasmSymbol? original, WasmSymbol? tried) => 'CRITICAL EXCEPTION! Address double use! This should never happen, please report this issue on github immediately at $_github'
+String _adu(WasmSymbol? original, WasmSymbol? tried) =>
+    'CRITICAL EXCEPTION! Address double use! This should never happen, please report this issue on github immediately at $_github'
     '\r\nOriginal: $original'
     '\r\nTried: $tried';
 
@@ -185,12 +185,7 @@ class EmscriptenModule extends Module {
           name = name.substring(1);
 
           final func = value as WrappedJSFunction;
-          final desc = FunctionDescription(
-            tableIndex: exports.length,
-            name: name,
-            function: value as JSFunction,
-            argumentCount: func.length?.toDartInt ?? 0,
-          );
+          final desc = FunctionDescription(tableIndex: exports.length, name: name, function: value as JSFunction, argumentCount: func.length?.toDartInt ?? 0);
           exports.add(desc);
 
           if (name == 'malloc') {
@@ -259,5 +254,6 @@ class EmscriptenModule extends Module {
   F lookupFunction<T extends Function, F extends Function>(String name, Memory memory) {
     return lookup<NativeFunction<T>>(name, memory).asFunction<F>();
   }
+
   // _EmscriptenModuleJs get module => _emscriptenModuleJs;
 }

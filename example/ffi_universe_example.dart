@@ -11,17 +11,11 @@ typedef InvokeFunctionNative = Pointer<Char> Function(Pointer<Char> parameters);
 typedef InvokeFunctionDart = Pointer<Char> Function(Pointer<Char> parameters);
 
 void main() async {
-  final DynamicLibrary dynamicLibrary = await FFIUniverse.open(
-    path: "libraryname",
-  );
+  final DynamicLibrary dynamicLibrary = await FFIUniverse.open(path: "libraryname");
 
   /// main_function
   {
-    final List<String> arguments = [
-      "",
-      "--help",
-      "name",
-    ];
+    final List<String> arguments = ["", "--help", "name"];
     final MainFunctionDart mainFunction = dynamicLibrary.lookupFunction<MainFunctionNative, MainFunctionDart>("main");
     mainFunction(arguments.length, arguments.toNativeVectorChar());
   }
@@ -37,9 +31,7 @@ void main() async {
 
   /// invoke_function
   {
-    final Map<String, dynamic> parameters = {
-      "@type": "getVersion",
-    };
+    final Map<String, dynamic> parameters = {"@type": "getVersion"};
     final Pointer<Utf8> parametersNative = json.encode(parameters).toNativeUtf8();
     final InvokeFunctionDart invokeFunction = dynamicLibrary.lookupFunction<InvokeFunctionNative, InvokeFunctionDart>("invoke");
     final Pointer<Char> resultInvoke = invokeFunction(parametersNative.cast<Char>());

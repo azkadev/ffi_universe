@@ -12,9 +12,7 @@ extension ListStringExtensionFFIUNIVERSE on List<String> {
   /// to = std::vector\<char\> argv[1] = {"hello"}
   ///
   Pointer<Pointer<Char>> toNativeVectorChar() {
-    return VectorFfiUniverseUtils.fromListStringToVectorChar(
-      strings: this,
-    );
+    return VectorFfiUniverseUtils.fromListStringToVectorChar(strings: this);
   }
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -26,8 +24,6 @@ extension ListStringExtensionFFIUNIVERSE on List<String> {
   /// to = std::vector\<string\> argv[1] = {"hello"}
   ///
   Pointer<Pointer<Utf8>> toNativeVectorString() {
-    return VectorFfiUniverseUtils.fromListStringToVectorString(
-      strings: this,
-    );
+    return VectorFfiUniverseUtils.fromListStringToVectorString(strings: this);
   }
 }

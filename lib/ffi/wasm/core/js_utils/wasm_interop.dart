@@ -24,7 +24,6 @@ extension type WrappedJSAny._(JSAny _) implements JSAny {
 }
 
 @JS('Object')
-
 ///
 extension type WrappedJSObject._(JSObject _) implements JSObject {
   ///
@@ -36,7 +35,6 @@ extension type WrappedJSObject._(JSObject _) implements JSObject {
 
 @JS()
 @anonymous
-
 ///
 extension type WrappedJSFunction._(JSObject _) implements JSObject {
   ///
@@ -121,7 +119,6 @@ extension type ModuleExportDescriptor._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Module')
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmModule._(JSObject _) implements JSObject {
   // List<_ModuleExportDescriptor>
@@ -142,7 +139,6 @@ extension type WasmModule._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Instance')
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmInstance._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -164,19 +160,13 @@ external JSPromise<_InstantiateResultObject> _instantiate(JSObject bytesOrBuffer
 external JSPromise<_InstantiateResultObject> _instantiateStreaming(JSAny? source, JSObject imports);
 
 @JS()
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type MemoryDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external factory MemoryDescriptor({
-    required JSNumber initial,
-    JSNumber? maximum,
-    JSBoolean? shared,
-  });
+  external factory MemoryDescriptor({required JSNumber initial, JSNumber? maximum, JSBoolean? shared});
 }
 
 @JS('WebAssembly.Memory')
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmMemory._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -190,7 +180,6 @@ extension type WasmMemory._(JSObject _) implements JSObject {
 }
 
 @JS()
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type GlobalDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -198,7 +187,6 @@ extension type GlobalDescriptor._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Global')
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmGlobal._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -210,19 +198,13 @@ extension type WasmGlobal._(JSObject _) implements JSObject {
 }
 
 @JS()
-
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type TableDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external factory TableDescriptor({
-    required JSString element,
-    required JSNumber initial,
-    JSNumber? maximum,
-  });
+  external factory TableDescriptor({required JSString element, required JSNumber initial, JSNumber? maximum});
 }
 
 @JS('WebAssembly.Table')
-
 ///
 extension type WasmTable._(JSObject _) implements JSObject {
   ///
@@ -303,10 +285,7 @@ class Instance {
   }
 
   ///
-  static Future<Instance> loadfromUrl(
-    String url, {
-    Map<String, Map<String, JSAny?>> imports = const {},
-  }) async {
+  static Future<Instance> loadfromUrl(String url, {Map<String, Map<String, JSAny?>> imports = const {}}) async {
     final importsJs = _createJsImports(imports);
     final response = await _fetch(url.toJS).toDart;
     final native = await _instantiateStreaming(response, importsJs).toDart;
