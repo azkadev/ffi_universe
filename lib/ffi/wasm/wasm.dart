@@ -9,3 +9,8 @@ export 'core/ffi/extensions.dart';
 export 'core/ffi/marshaller.dart' show registerOpaqueType;
 export 'core/ffi/native_finalizer.dart';
 export 'core/ffi/types.dart';
+
+export 'core/ffi_utils/allocation.dart' show calloc, malloc;
+export 'core/ffi_utils/arena.dart';
+export 'core/ffi_utils/utf16.dart';
+export 'core/ffi_utils/utf8.dart';
