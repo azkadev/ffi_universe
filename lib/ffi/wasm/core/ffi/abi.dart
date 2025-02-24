@@ -114,7 +114,9 @@ class Abi {
   ];
 
   /// The ABI the Dart VM is currently running on.
-  external factory Abi.current();
+  factory Abi.current() {
+    return linuxX64;
+  }
 
   /// A string representation of this ABI.
   ///

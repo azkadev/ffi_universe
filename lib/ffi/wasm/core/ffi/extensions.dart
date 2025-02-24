@@ -269,22 +269,29 @@ extension IntPtrPointer on Pointer<IntPtr> {
 }
 
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+/// not_real_implemented
 extension AbiSpecificIntegerPointer<T extends AbiSpecificInteger>
     on Pointer<T> {
   /// The integer at [address].
-  external int get value;
+  int get value => this[0];
 
-  external set value(int value);
+  set value(int value) {
+    this[0] = value;
+  }
 
   /// The integer at `address + sizeOf\<T\>() * index`.
-  external int operator [](int index);
+  int operator [](int index) {
+    return index;
+  }
 
   /// The integer at `address + sizeOf\<T\>() * index`.
-  external void operator []=(int index, int value);
+  void operator []=(int index, int value) {}
 
   /// Pointer arithmetic (takes element size into account).
   @Deprecated('Use operator + instead')
-  external Pointer<T> elementAt(int index);
+  Pointer<T> elementAt(int index) {
+    return this.elementAt(index);
+  }
 
   /// A pointer to the [offset]th [T] after this one.
   ///
@@ -294,7 +301,9 @@ extension AbiSpecificIntegerPointer<T extends AbiSpecificInteger>
   ///
   /// Also `(this + offset).value` is equivalent to `this[offset]`,
   /// and similarly for setting.
-  external Pointer<T> operator +(int offset);
+  Pointer<T> operator +(int offset) {
+    return this.elementAt(offset);
+  }
 
   /// A pointer to the [offset]th [T] before this one.
   ///
@@ -306,7 +315,9 @@ extension AbiSpecificIntegerPointer<T extends AbiSpecificInteger>
   ///
   /// Also, `(this - offset).value` is equivalent to `this[-offset]`,
   /// and similarly for setting,
-  external Pointer<T> operator -(int offset);
+  Pointer<T> operator -(int offset) {
+    return this.elementAt(offset);
+  }
 }
 
 /// Extension on [Pointer] specialized for the type argument [Pointer].

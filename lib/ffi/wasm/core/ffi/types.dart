@@ -586,7 +586,11 @@ final class _Compound implements NativeType {
   // ignore: unused_field
   final int _offsetInBytes;
 
-  external _Compound._();
+  _Compound._([int? offsetInBytes, Object? typedDataBase])
+    : _typedDataBase = typedDataBase ?? "",
+      _offsetInBytes = offsetInBytes ?? 0 {
+    throw UnimplementedError();
+  }
 
   @pragma('vm:prefer-inline')
   _Compound._fromTypedDataBase(this._typedDataBase, this._offsetInBytes);
@@ -714,7 +718,9 @@ abstract base class Struct extends _Compound implements SizedNativeType {
   ///
   /// To create a struct object from a [Pointer], use .
   // @Since('3.4')
-  external static T create<T extends Struct>([TypedData typedData, int offset]);
+  static T create<T extends Struct>([TypedData? typedData, int? offset]) {
+    throw UnimplementedError();
+  }
 
   /// Creates a view on a [TypedData] or [Pointer].
   ///
@@ -879,7 +885,9 @@ abstract base class Union extends _Compound implements SizedNativeType {
   ///
   /// To create a union object from a [Pointer], use .
   // @Since('3.4')
-  external static T create<T extends Union>([TypedData typedData, int offset]);
+  static T create<T extends Union>([TypedData? typedData, int? offset]) {
+    throw UnimplementedError();
+  }
 
   /// Creates a view on a [TypedData] or [Pointer].
   ///
