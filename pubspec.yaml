@@ -20,7 +20,9 @@ dependencies:
 dev_dependencies:
   lints: '^5.0.0'
   test: 'any'
-  general_lib: '^0.0.63'
+  general_lib: '^0.0.66'
 dependency_overrides:
   pointycastle: '3.8.0'
   mime: '^2.0.0'
+project:
+  type: ''

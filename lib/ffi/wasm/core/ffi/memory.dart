@@ -35,12 +35,8 @@ class Memory implements Allocator {
   final Map<int, WasmSymbol> _symbolsByAddress;
 
   Memory._(this._module)
-      : _symbolsByAddress = Map<int, WasmSymbol>.fromEntries(_module.exports
-            .map<MapEntry<int, WasmSymbol>>((WasmSymbol symbol) =>
-                MapEntry<int, WasmSymbol>(symbol.address, symbol))),
-        _symbolsByName = Map<String, WasmSymbol>.fromEntries(_module.exports
-            .map<MapEntry<String, WasmSymbol>>((WasmSymbol symbol) =>
-                MapEntry<String, WasmSymbol>(symbol.name, symbol)));
+      : _symbolsByAddress = Map<int, WasmSymbol>.fromEntries(_module.exports.map<MapEntry<int, WasmSymbol>>((WasmSymbol symbol) => MapEntry<int, WasmSymbol>(symbol.address, symbol))),
+        _symbolsByName = Map<String, WasmSymbol>.fromEntries(_module.exports.map<MapEntry<String, WasmSymbol>>((WasmSymbol symbol) => MapEntry<String, WasmSymbol>(symbol.name, symbol)));
 
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
@@ -53,8 +49,10 @@ class Memory implements Allocator {
   }
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 Memory createMemory(Module module) => Memory._(module);
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 WasmSymbol symbolByAddress(Memory m, int address) {
   final WasmSymbol? s = m._symbolsByAddress[address];
   if (s != null) {
@@ -64,6 +62,7 @@ WasmSymbol symbolByAddress(Memory m, int address) {
   }
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 WasmSymbol symbolByName(Memory m, String name) {
   final WasmSymbol? s = m._symbolsByName[name];
   if (s != null) {

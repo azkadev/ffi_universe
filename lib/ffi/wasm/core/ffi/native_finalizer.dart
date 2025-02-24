@@ -227,5 +227,4 @@ abstract interface class Finalizable {
 ///
 /// A [NativeFinalizer]'s `callback` should have the C
 /// `void nativeFinalizer(void* token)` type.
-typedef NativeFinalizerFunction
-    = NativeFunction<Void Function(Pointer<Void> token)>;
+typedef NativeFinalizerFunction = NativeFunction<Void Function(Pointer<Void> token)>;

@@ -18,6 +18,5 @@ extension AllocatorAlloc on Allocator {
   ///
   /// Since this calls [sizeOf<T>] internally, an exception will be thrown if this
   /// method is called with an @[unsized] type or before [initTypes] was called.
-  Pointer<T> call<T extends NativeType>([int count = 1]) =>
-      allocate(sizeOf<T>() * count);
+  Pointer<T> call<T extends NativeType>([int count = 1]) => allocate(sizeOf<T>() * count);
 }

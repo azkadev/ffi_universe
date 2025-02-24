@@ -9,6 +9,8 @@ import '../types.dart';
 import 'module.dart';
 
 @extra
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class StandaloneWasmModule extends Module {
   final Instance _instance;
   final List<WasmSymbol> _exports = [];
@@ -16,23 +18,19 @@ class StandaloneWasmModule extends Module {
   @override
   List<WasmSymbol> get exports => _exports;
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   static Future<StandaloneWasmModule> compile(Uint8List wasmBinary) async {
     final wasmInstance = await Instance.loadFromBinary(wasmBinary);
     return StandaloneWasmModule._(wasmInstance);
   }
 
-  FunctionDescription _fromWasmFunction(
-      String name, JSFunction func, int index) {
+  FunctionDescription _fromWasmFunction(String name, JSFunction func, int index) {
     final funcDesc = func as WrappedJSFunction;
 
     if (funcDesc.name != null) {
       final length = funcDesc.length;
       if (length != null) {
-        return FunctionDescription(
-            tableIndex: index,
-            name: name,
-            function: func,
-            argumentCount: length.toDartInt);
+        return FunctionDescription(tableIndex: index, name: name, function: func, argumentCount: length.toDartInt);
       }
     }
     throw ArgumentError('$name does not seem to be a function symbol!');
@@ -57,8 +55,7 @@ class StandaloneWasmModule extends Module {
   ByteBuffer get heap => _instance.memories['memory']!.buffer.toDart;
 
   @override
-  WasmTable? get indirectFunctionTable =>
-      _instance.tables['__indirect_function_table'];
+  WasmTable? get indirectFunctionTable => _instance.tables['__indirect_function_table'];
 
   @override
   int malloc(int size) {
@@ -84,8 +81,7 @@ class StandaloneWasmModule extends Module {
       if (symbol is FunctionDescription) {
         return Pointer<T>.fromAddress(symbol.tableIndex, memory);
       } else {
-        throw ArgumentError(
-            'Tried to look up $name as a function, but it seems it is NOT a function!');
+        throw ArgumentError('Tried to look up $name as a function, but it seems it is NOT a function!');
       }
     } else {
       return Pointer<T>.fromAddress(symbol.address, memory);
@@ -98,8 +94,7 @@ class StandaloneWasmModule extends Module {
   bool providesSymbol(String symbolName) => throw UnimplementedError();
 
   @override
-  F lookupFunction<T extends Function, F extends Function>(
-      String name, Memory memory) {
+  F lookupFunction<T extends Function, F extends Function>(String name, Memory memory) {
     return _instance.functions[name]! as F;
   }
 }

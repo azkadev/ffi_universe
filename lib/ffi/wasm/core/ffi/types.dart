@@ -192,22 +192,36 @@ class Size extends NativeType {}
 
 /// Miscellaneous types, defined as alias
 typedef Char = Int8;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef UnsignedChar = Uint8;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef Short = Int16;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef UnsignedShort = Uint16;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef Long = Int32;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef UnsignedLong = Uint32;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef LongLong = Int64;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef UnsignedLongLong = Uint64;
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef WChar = Int32;
 
 /// Represents a pointer into the native C memory. Cannot be extended.
 @sealed
 class Pointer<T extends NativeType> extends NativeType {
-  static Pointer<NativeFunction<T>> fromFunction<T extends Function>(Function f,
-      [Object? exceptionalReturn,
-      Memory? bindToMemory,
-      WasmTable? bindToTable]) {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  static Pointer<NativeFunction<T>> fromFunction<T extends Function>(Function f, [Object? exceptionalReturn, Memory? bindToMemory, WasmTable? bindToTable]) {
     final Memory? memory = bindToMemory ?? Memory.global;
     final WasmTable? table = bindToTable ?? WasmTable.global;
     return pointerFromFunctionImpl(f, table!, memory!);
@@ -239,8 +253,7 @@ class Pointer<T extends NativeType> extends NativeType {
   factory Pointer.fromAddress(int ptr, [Memory? bindTo]) {
     final Memory? memory = bindTo ?? Memory.global;
     if (memory == null) {
-      throw StateError(
-          'No global memory set and no explcity memory to bind to given!');
+      throw StateError('No global memory set and no explcity memory to bind to given!');
     }
     return Pointer._(ptr, memory, _isUnsizedType<T>() ? null : sizeOf<T>());
   }
@@ -248,8 +261,7 @@ class Pointer<T extends NativeType> extends NativeType {
   Pointer._(this.address, this.boundMemory, this.size);
 
   /// Casts this pointer to an other type.
-  Pointer<U> cast<U extends NativeType>() => Pointer<U>._(
-      address, boundMemory, _isUnsizedType<U>() ? null : sizeOf<U>());
+  Pointer<U> cast<U extends NativeType>() => Pointer<U>._(address, boundMemory, _isUnsizedType<U>() ? null : sizeOf<U>());
 
   /// Pointer arithmetic (takes element size into account).
   ///
@@ -271,8 +283,7 @@ class Pointer<T extends NativeType> extends NativeType {
   /// Two pointers are equal if their address is the same, independently
   /// of their type argument and of the memory they are bound to.
   @override
-  bool operator ==(Object other) =>
-      (other is Pointer && other.address == address);
+  bool operator ==(Object other) => (other is Pointer && other.address == address);
 
   /// Returns a view of a single element at [index] (takes element
   /// size into account).
@@ -292,6 +303,7 @@ class Pointer<T extends NativeType> extends NativeType {
   }
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 typedef AllowedFunc = JSAny Function(JSAny?, JSAny?, JSAny?, JSAny?);
 
 JSFunction _toWasmFunction(String signature, Function func) {
@@ -306,13 +318,9 @@ JSFunction _toWasmFunction(String signature, Function func) {
   };
 
   // ignore: prefer_function_declarations_over_variables
-  final encodeArgTypes = (String types) => [
-        types.length,
-        ...types.runes.map((c) => typeCodes[String.fromCharCode(c)]!)
-      ];
+  final encodeArgTypes = (String types) => [types.length, ...types.runes.map((c) => typeCodes[String.fromCharCode(c)]!)];
   // ignore: prefer_function_declarations_over_variables
-  final encodeSection =
-      (int type, List<int> content) => [type, content.length, ...content];
+  final encodeSection = (int type, List<int> content) => [type, content.length, ...content];
 
   // The module is static, with the exception of the type section, which is
   // generated based on the signature passed in.
@@ -349,9 +357,13 @@ JSFunction _toWasmFunction(String signature, Function func) {
   return instance.functions['f']!;
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 final Map<Function, Pointer> exportedFunctions = {};
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 final Map<String, String> signatures = {};
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 void initSignatures([int pointerSizeBytes = 4]) {
   signatures[typeString<Float>()] = 'f';
   signatures[typeString<Double>()] = 'd';
@@ -374,8 +386,7 @@ String _getWasmSignature<T extends Function>() {
   final List<String> dartSignature = typeString<T>().split('=>');
   final String retType = dartSignature.last.trim();
   final String argTypes = dartSignature.first.trim();
-  final List<String> argTypesList =
-      argTypes.substring(1, argTypes.length - 1).split(', ');
+  final List<String> argTypesList = argTypes.substring(1, argTypes.length - 1).split(', ');
 
   developer.log('types: $retType $argTypesList');
   developer.log('sigs: ${signatures.keys}');
@@ -385,19 +396,20 @@ String _getWasmSignature<T extends Function>() {
 
 //final Set<Function> theFunctions = {};
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 final List<Function Function(Function)> callbackHelpers = [
   (Function func) => () => func([]),
   (Function func) => (arg1) => func([arg1]),
   (Function func) => (arg1, arg2) => func([arg1, arg2]),
   (Function func) => (arg1, arg2, arg3) => func([arg1, arg2, arg3]),
   (Function func) => (arg1, arg2, arg3, arg4) => func([arg1, arg2, arg3, arg4]),
-  (Function func) =>
-      (arg1, arg2, arg3, arg4, arg5) => func([arg1, arg2, arg3, arg4, arg5]),
-  (Function func) => (arg1, arg2, arg3, arg4, arg5, arg6) =>
-      func([arg1, arg2, arg3, arg4, arg5, arg6]),
+  (Function func) => (arg1, arg2, arg3, arg4, arg5) => func([arg1, arg2, arg3, arg4, arg5]),
+  (Function func) => (arg1, arg2, arg3, arg4, arg5, arg6) => func([arg1, arg2, arg3, arg4, arg5, arg6]),
 ];
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension ListExtension<T> on List<T> {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   Iterable<E> mapIndexed<E>(E Function(int index, T item) f) sync* {
     for (var i = 0; i < length; i++) {
       yield f(i, this[i]);
@@ -405,25 +417,21 @@ extension ListExtension<T> on List<T> {
   }
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
-    /* TODO: @DartRepresentationOf('T')  */
+    /* @DartRepresentationOf('T')  */
     Function func,
     WasmTable table,
     Memory memory) {
-  // TODO: garbage collect
+  // garbage collect
 
   return exportedFunctions.putIfAbsent(func, () {
     developer.log('marshal from: ${func.runtimeType} to $T');
     final String dartSignature = func.runtimeType.toString();
     final String argTypes = dartSignature.split('=>').first.trim();
-    final List<String> argT =
-        argTypes.substring(1, argTypes.length - 1).split(', ');
+    final List<String> argT = argTypes.substring(1, argTypes.length - 1).split(', ');
     developer.log('arg types: $argT');
-    final List<Function> marshallers = argTypes
-        .substring(1, argTypes.length - 1)
-        .split(', ')
-        .map((arg) => marshaller(arg))
-        .toList();
+    final List<Function> marshallers = argTypes.substring(1, argTypes.length - 1).split(', ').map((arg) => marshaller(arg)).toList();
 
     final String wasmSignature = _getWasmSignature<T>();
 
@@ -432,8 +440,7 @@ Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
     // ignore: prefer_function_declarations_over_variables
     final Function wrapper1 = (List args) {
       developer.log('wrapper of $T called with $args');
-      final marshalledArgs =
-          marshallers.mapIndexed((i, m) => m(args[i], memory)).toList();
+      final marshalledArgs = marshallers.mapIndexed((i, m) => m(args[i], memory)).toList();
       developer.log('which is $marshalledArgs on $func');
       Function.apply(func, marshalledArgs);
       developer.log('done!');
@@ -446,7 +453,6 @@ Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
     table.grow(1.toJS);
     table.set((table.length.toDartInt - 1).toJS, wasmFunc);
     developer.log('created callback with index ${table.length.toDartInt - 1}');
-    return Pointer<NativeFunction<T>>.fromAddress(
-        table.length.toDartInt - 1, memory);
+    return Pointer<NativeFunction<T>>.fromAddress(table.length.toDartInt - 1, memory);
   }) as Pointer<NativeFunction<T>>;
 }

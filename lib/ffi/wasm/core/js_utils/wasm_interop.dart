@@ -71,8 +71,7 @@ extension type JsBigInt(JSBigInt _jsBigInt) implements JSBigInt {
     const maxSafeInteger = 9007199254740992;
     const minSafeInteger = -maxSafeInteger;
 
-    return minSafeInteger.toJS.lessThanOrEqualTo(_jsBigInt).toDart &&
-        _jsBigInt.lessThanOrEqualTo(maxSafeInteger.toJS).toDart;
+    return minSafeInteger.toJS.lessThanOrEqualTo(_jsBigInt).toDart && _jsBigInt.lessThanOrEqualTo(maxSafeInteger.toJS).toDart;
   }
 
   ///
@@ -122,25 +121,34 @@ extension type ModuleExportDescriptor._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Module')
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmModule._(JSObject _) implements JSObject {
   // List<_ModuleExportDescriptor>
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external static JSArray<ModuleExportDescriptor> exports(WasmModule module);
 
   // List<_ModuleImportDescriptor>
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external static JSArray<ModuleImportDescriptor> imports(WasmModule module);
 
   // List<ByteBuffer>
-  external static JSArray<JSArrayBuffer> customSections(
-      WasmModule module, JSString sectionName);
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  external static JSArray<JSArrayBuffer> customSections(WasmModule module, JSString sectionName);
 
   // Named constructor to create module synchronously.
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external WasmModule.fromBytesOrBuffer(JSObject bytesOrBuffer);
 }
 
 @JS('WebAssembly.Instance')
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmInstance._(JSObject _) implements JSObject {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external JSObject get exports;
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external WasmInstance(WasmModule module, JSObject imports);
 }
 
@@ -150,15 +158,16 @@ extension type _InstantiateResultObject._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.instantiate')
-external JSPromise<_InstantiateResultObject> _instantiate(
-    JSObject bytesOrBuffer, JSObject import);
+external JSPromise<_InstantiateResultObject> _instantiate(JSObject bytesOrBuffer, JSObject import);
 
 @JS('WebAssembly.instantiateStreaming')
-external JSPromise<_InstantiateResultObject> _instantiateStreaming(
-    JSAny? source, JSObject imports);
+external JSPromise<_InstantiateResultObject> _instantiateStreaming(JSAny? source, JSObject imports);
 
 @JS()
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type MemoryDescriptor._(JSObject _) implements JSObject {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external factory MemoryDescriptor({
     required JSNumber initial,
     JSNumber? maximum,
@@ -167,32 +176,44 @@ extension type MemoryDescriptor._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.Memory')
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmMemory._(JSObject _) implements JSObject {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external factory WasmMemory(MemoryDescriptor descriptor);
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external JSArrayBuffer get buffer;
 
-  static bool isInstance(JSAny? obj) =>
-      obj != null && obj.instanceof(_memoryConstructor);
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_memoryConstructor);
 }
 
 @JS()
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type GlobalDescriptor._(JSObject _) implements JSObject {
-  external factory GlobalDescriptor(
-      {required JSString value, JSBoolean mutable});
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  external factory GlobalDescriptor({required JSString value, JSBoolean mutable});
 }
 
 @JS('WebAssembly.Global')
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type WasmGlobal._(JSObject _) implements JSObject {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external factory WasmGlobal(GlobalDescriptor descriptor, JSBoolean mutable);
   external JSNumber value;
 
-  static bool isInstance(JSAny? obj) =>
-      obj != null && obj.instanceof(_globalConstructor);
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_globalConstructor);
 }
 
 @JS()
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type TableDescriptor._(JSObject _) implements JSObject {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   external factory TableDescriptor({
     required JSString element,
     required JSNumber initial,
@@ -223,16 +244,27 @@ extension type WasmTable._(JSObject _) implements JSObject {
   external JSNumber grow(JSNumber delta);
 
   ///
-  static bool isInstance(JSAny? obj) =>
-      obj != null && obj.instanceof(_tableConstructor);
+  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_tableConstructor);
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class Instance {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final WasmModule nativeModule;
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final WasmInstance nativeInstance;
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final Map<String, JSFunction> functions = {};
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final Map<String, WasmGlobal> globals = {};
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final Map<String, WasmMemory> memories = <String, WasmMemory>{};
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   final Map<String, WasmTable> tables = <String, WasmTable>{};
 
   Instance._(this.nativeModule, this.nativeInstance) {
@@ -304,8 +336,7 @@ class Instance {
   ///
   /// The returned [Instance] object is used to access the exports of the
   /// module.
-  static Future<Instance> loadFromBinary(Uint8List wasmBinary,
-      {Map<String, Map<String, JSAny?>> imports = const {}}) async {
+  static Future<Instance> loadFromBinary(Uint8List wasmBinary, {Map<String, Map<String, JSAny?>> imports = const {}}) async {
     final importsJs = _createJsImports(imports);
 
     final native = await _instantiate(wasmBinary.toJS, importsJs).toDart;
@@ -328,8 +359,7 @@ class Instance {
   ///
   /// This function is useful if you want to load a wasm binary from a file, or
   /// from a bytes buffer.
-  static Instance loadFromBinarySync(Uint8List wasmBinary,
-      {Map<String, Map<String, JSAny?>> imports = const {}}) {
+  static Instance loadFromBinarySync(Uint8List wasmBinary, {Map<String, Map<String, JSAny?>> imports = const {}}) {
     final importsJs = _createJsImports(imports);
     final module = WasmModule.fromBytesOrBuffer(wasmBinary.toJS);
 

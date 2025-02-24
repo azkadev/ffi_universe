@@ -54,9 +54,10 @@ abstract class Module {
   /// name.
   bool providesSymbol(String symbolName);
 
-  F lookupFunction<T extends Function, F extends Function>(
-      String name, Memory memory);
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  F lookupFunction<T extends Function, F extends Function>(String name, Memory memory);
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   interop.WasmTable? get indirectFunctionTable;
 }
 
@@ -70,6 +71,7 @@ abstract class WasmSymbol {
   /// The name of the exported thing.
   final String name;
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   const WasmSymbol({required this.address, required this.name});
 
   @override
@@ -85,6 +87,7 @@ abstract class WasmSymbol {
 @extra
 @sealed
 class Global extends WasmSymbol {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   const Global({required super.address, required super.name});
 
   @override
@@ -111,12 +114,9 @@ class FunctionDescription extends WasmSymbol {
 
   /// The actual function.
   final JSFunction function;
-  const FunctionDescription(
-      {required int tableIndex,
-      required super.name,
-      required this.argumentCount,
-      required this.function})
-      : super(address: tableIndex);
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  const FunctionDescription({required int tableIndex, required super.name, required this.argumentCount, required this.function}) : super(address: tableIndex);
 
   @override
   int get hashCode => '$name$argumentCount$tableIndex'.hashCode;
@@ -124,15 +124,12 @@ class FunctionDescription extends WasmSymbol {
   @override
   bool operator ==(Object other) {
     if (other is FunctionDescription) {
-      return argumentCount == other.argumentCount &&
-          name == other.name &&
-          tableIndex == other.tableIndex;
+      return argumentCount == other.argumentCount && name == other.name && tableIndex == other.tableIndex;
     } else {
       return false;
     }
   }
 
   @override
-  String toString() =>
-      '[tableIndex=$tableIndex\tname=$name\targumentCount=$argumentCount\tfunction=$function]';
+  String toString() => '[tableIndex=$tableIndex\tname=$name\targumentCount=$argumentCount\tfunction=$function]';
 }

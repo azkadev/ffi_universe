@@ -1,7 +1,9 @@
-// ignore_for_file: unused_import
-
 import 'package:ffi_universe/ffi_universe.dart';
 
-void main() {
-  print('awesome:');
+void main() async {
+  final DynamicLibrary dynamicLibrary = await FFIUniverse.open(
+    path: "libraryname",
+  );
+  dynamicLibrary.lookupFunction("main").call();
+  dynamicLibrary.close();
 }

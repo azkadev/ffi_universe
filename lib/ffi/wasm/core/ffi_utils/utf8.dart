@@ -62,8 +62,7 @@ extension Utf8Pointer on Pointer<Utf8> {
 
   void _ensureNotNullptr(String operation) {
     if (this == nullptr) {
-      throw UnsupportedError(
-          "Operation '$operation' not allowed on a 'nullptr'.");
+      throw UnsupportedError("Operation '$operation' not allowed on a 'nullptr'.");
     }
   }
 }

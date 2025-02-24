@@ -16,7 +16,10 @@ import 'types.dart';
 
 /// An interface for loading module binary.
 mixin ModuleLoader {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   Future<bool> exists(String modulePath);
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   Future<Uint8List> load(String modulePath);
 }
 
@@ -24,18 +27,34 @@ mixin ModuleLoader {
 enum WasmType {
   /// The module is loaded from a wasm file
   wasm32Standalone,
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   wasm64Standalone,
 
   /// The module is loaded using emscripten js
   wasm32Emscripten,
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   wasm64Emscripten,
 }
 
 /// Used on [DynamicLibrary] creation to control if the therby newly created
 /// [Memory] object should be registered as [Memory.global].
 @extra
-enum GlobalMemory { yes, no, ifNotSet }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+enum GlobalMemory {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  yes,
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  no,
+
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  ifNotSet,
+}
+
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class WebModuleLoader implements ModuleLoader {
   @override
   Future<bool> exists(String modulePath) async {
@@ -110,8 +129,7 @@ class DynamicLibrary {
     GlobalMemory? useAsGlobal,
   }) async {
     /// 64-bit wasm is not supported
-    if (wasmType == WasmType.wasm64Standalone ||
-        wasmType == WasmType.wasm64Emscripten) {
+    if (wasmType == WasmType.wasm64Standalone || wasmType == WasmType.wasm64Emscripten) {
       throw UnsupportedError('64-bit wasm is not supported');
     }
 
@@ -193,8 +211,7 @@ class DynamicLibrary {
   /// While this method checks if the underyling wasm symbol is a actually
   /// a function when you lookup a [NativeFunction]`<T>`, it does not check if
   /// the return type and parameters of `T` match the wasm function.
-  Pointer<T> lookup<T extends NativeType>(String name) =>
-      _module.lookup(name, _memory);
+  Pointer<T> lookup<T extends NativeType>(String name) => _module.lookup(name, _memory);
 
   /// Checks whether this dynamic library provides a symbol with the given
   /// name.
@@ -216,6 +233,5 @@ class DynamicLibrary {
   ///
   /// This simply calls [DynamicLibrary.lookup] and [NativeFunctionPointer.asFunction]
   /// internally, so see this two methods for additional insights.
-  F lookupFunction<T extends Function, F extends Function>(String name) =>
-      _module.lookupFunction(name, _memory);
+  F lookupFunction<T extends Function, F extends Function>(String name) => _module.lookupFunction(name, _memory);
 }
