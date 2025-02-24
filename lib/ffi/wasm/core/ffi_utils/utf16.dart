@@ -51,7 +51,8 @@ extension Utf16Pointer on Pointer<Utf16> {
     }
   }
 
-  static String _toKnownLengthString(Pointer<Uint16> codeUnits, int length) => String.fromCharCodes(codeUnits.asTypedList(length));
+  static String _toKnownLengthString(Pointer<Uint16> codeUnits, int length) =>
+      String.fromCharCodes(codeUnits.asTypedList(length));
 
   static String _toUnknownLengthString(Pointer<Uint16> codeUnits) {
     final buffer = StringBuffer();
@@ -76,7 +77,9 @@ extension Utf16Pointer on Pointer<Utf16> {
 
   void _ensureNotNullptr(String operation) {
     if (this == nullptr) {
-      throw UnsupportedError("Operation '$operation' not allowed on a 'nullptr'.");
+      throw UnsupportedError(
+        "Operation '$operation' not allowed on a 'nullptr'.",
+      );
     }
   }
 }

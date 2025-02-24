@@ -51,7 +51,7 @@ abstract final class _NativeDouble implements SizedNativeType {}
 @sealed
 @notConstructible
 final class Double implements _NativeDouble {
-/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   const Double();
 }
 

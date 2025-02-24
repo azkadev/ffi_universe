@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'allocation.dart';
 import 'annotations.dart';
- import 'modules/module.dart';
+import 'modules/module.dart';
 import 'types.dart';
 
 /// Represents the native heap.

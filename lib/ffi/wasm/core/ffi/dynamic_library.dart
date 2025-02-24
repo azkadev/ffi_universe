@@ -232,7 +232,7 @@ class DynamicLibrary {
 
   /// Helper that combines lookup and cast to a Dart function.
   ///
-  /// This simply calls [DynamicLibrary.lookup] and 
+  /// This simply calls [DynamicLibrary.lookup] and
   /// internally, so see this two methods for additional insights.
   F lookupFunction<T extends Function, F extends Function>(String name) =>
       _module.lookupFunction(name, _memory);
