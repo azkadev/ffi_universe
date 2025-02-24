@@ -2,8 +2,7 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'allocation.dart';
 import 'annotations.dart';
-import 'dynamic_library.dart';
-import 'modules/module.dart';
+ import 'modules/module.dart';
 import 'types.dart';
 
 /// Represents the native heap.
@@ -17,7 +16,7 @@ class Memory implements Allocator {
   /// The default [Memory] object to use.
   ///
   /// This field is null until it is either manually set to a [Memory] object,
-  /// or automatically set by [DynamicLibrary.fromModule].
+  /// or automatically set by.
   ///
   /// This is most notably used when creating a pointer using [Pointer.fromAddress]
   /// with no explicite memory to bind to given.
@@ -34,7 +33,19 @@ class Memory implements Allocator {
   final Map<String, WasmSymbol> _symbolsByName;
   final Map<int, WasmSymbol> _symbolsByAddress;
 
-  Memory._(this._module) : _symbolsByAddress = Map<int, WasmSymbol>.fromEntries(_module.exports.map<MapEntry<int, WasmSymbol>>((WasmSymbol symbol) => MapEntry<int, WasmSymbol>(symbol.address, symbol))), _symbolsByName = Map<String, WasmSymbol>.fromEntries(_module.exports.map<MapEntry<String, WasmSymbol>>((WasmSymbol symbol) => MapEntry<String, WasmSymbol>(symbol.name, symbol)));
+  Memory._(this._module)
+    : _symbolsByAddress = Map<int, WasmSymbol>.fromEntries(
+        _module.exports.map<MapEntry<int, WasmSymbol>>(
+          (WasmSymbol symbol) =>
+              MapEntry<int, WasmSymbol>(symbol.address, symbol),
+        ),
+      ),
+      _symbolsByName = Map<String, WasmSymbol>.fromEntries(
+        _module.exports.map<MapEntry<String, WasmSymbol>>(
+          (WasmSymbol symbol) =>
+              MapEntry<String, WasmSymbol>(symbol.name, symbol),
+        ),
+      );
 
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {

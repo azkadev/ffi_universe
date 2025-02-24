@@ -12,7 +12,7 @@ import 'types.dart';
 ///
 /// A type _includes `Finalizable`_ if either
 /// * the type is a non-`Never` subtype of `Finalizable`, or
-/// * the type is `T?` or `FutureOr<T>` where `T` includes `Finalizable`.
+/// * the type is `T?` or `FutureOr\<T\>` where `T` includes `Finalizable`.
 ///
 /// In other words, while an object is referenced by such a variable,
 /// it is guaranteed to *not* be considered unreachable,
@@ -216,15 +216,16 @@ import 'types.dart';
 ///   // ..
 /// }
 /// ```
-// TODO(http://dartbug.com/44395): Add implicit await to Dart implementation.
+
 // This will fix `useAsync2` above.
 // @Since('2.17')
 abstract interface class Finalizable {
   factory Finalizable._() => throw UnsupportedError('');
 }
 
-/// The native function type for [NativeFinalizer]s.
+/// The native function type fors.
 ///
-/// A [NativeFinalizer]'s `callback` should have the C
+/// A's `callback` should have the C
 /// `void nativeFinalizer(void* token)` type.
-typedef NativeFinalizerFunction = NativeFunction<Void Function(Pointer<Void> token)>;
+typedef NativeFinalizerFunction =
+    NativeFunction<Void Function(Pointer<Void> token)>;

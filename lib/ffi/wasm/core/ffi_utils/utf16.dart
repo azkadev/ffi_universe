@@ -12,12 +12,12 @@ import 'allocation.dart';
 /// The contents of a native zero-terminated array of UTF-16 code units.
 ///
 /// The Utf16 type itself has no functionality, it's only intended to be used
-/// through a `Pointer<Utf16>` representing the entire array. This pointer is
+/// through a `Pointer\<Utf16\>` representing the entire array. This pointer is
 /// the equivalent of a char pointer (`const wchar_t*`) in C code. The
 /// individual UTF-16 code units are stored in native byte order.
 final class Utf16 extends Opaque {}
 
-/// Extension method for converting a`Pointer<Utf16>` to a [String].
+/// Extension method for converting a`Pointer\<Utf16\>` to a [String].
 extension Utf16Pointer on Pointer<Utf16> {
   /// The number of UTF-16 code units in this zero-terminated UTF-16 string.
   ///
@@ -81,7 +81,7 @@ extension Utf16Pointer on Pointer<Utf16> {
   }
 }
 
-/// Extension method for converting a [String] to a `Pointer<Utf16>`.
+/// Extension method for converting a [String] to a `Pointer\<Utf16\>`.
 extension StringUtf16Pointer on String {
   /// Creates a zero-terminated [Utf16] code-unit array from this String.
   ///

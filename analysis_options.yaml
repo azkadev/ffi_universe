@@ -11,3 +11,23 @@ analyzer:
 linter:
   rules:
     - public_member_api_docs
+ 
+    - comment_references
+    # - always_declare_return_types
+    # - avoid_unused_constructor_parameters
+    # - cancel_subscriptions
+    # - comment_references
+    # - directives_ordering
+    # - no_adjacent_strings_in_list
+    # - omit_local_variable_types
+    # - only_throw_errors
+    # - prefer_const_constructors
+    # - prefer_single_quotes
+    # - sort_child_properties_last
+    # - test_types_in_equals
+    # - throw_in_finally
+    # - unawaited_futures
+    # - unnecessary_lambdas
+    # - unnecessary_library_directive
+    # - unnecessary_null_aware_assignments
+    # - unnecessary_statements

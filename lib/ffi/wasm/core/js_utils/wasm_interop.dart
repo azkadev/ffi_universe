@@ -69,7 +69,8 @@ extension type JsBigInt(JSBigInt _jsBigInt) implements JSBigInt {
     const maxSafeInteger = 9007199254740992;
     const minSafeInteger = -maxSafeInteger;
 
-    return minSafeInteger.toJS.lessThanOrEqualTo(_jsBigInt).toDart && _jsBigInt.lessThanOrEqualTo(maxSafeInteger.toJS).toDart;
+    return minSafeInteger.toJS.lessThanOrEqualTo(_jsBigInt).toDart &&
+        _jsBigInt.lessThanOrEqualTo(maxSafeInteger.toJS).toDart;
   }
 
   ///
@@ -131,7 +132,10 @@ extension type WasmModule._(JSObject _) implements JSObject {
 
   // List<ByteBuffer>
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external static JSArray<JSArrayBuffer> customSections(WasmModule module, JSString sectionName);
+  external static JSArray<JSArrayBuffer> customSections(
+    WasmModule module,
+    JSString sectionName,
+  );
 
   // Named constructor to create module synchronously.
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -154,16 +158,26 @@ extension type _InstantiateResultObject._(JSObject _) implements JSObject {
 }
 
 @JS('WebAssembly.instantiate')
-external JSPromise<_InstantiateResultObject> _instantiate(JSObject bytesOrBuffer, JSObject import);
+external JSPromise<_InstantiateResultObject> _instantiate(
+  JSObject bytesOrBuffer,
+  JSObject import,
+);
 
 @JS('WebAssembly.instantiateStreaming')
-external JSPromise<_InstantiateResultObject> _instantiateStreaming(JSAny? source, JSObject imports);
+external JSPromise<_InstantiateResultObject> _instantiateStreaming(
+  JSAny? source,
+  JSObject imports,
+);
 
 @JS()
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type MemoryDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external factory MemoryDescriptor({required JSNumber initial, JSNumber? maximum, JSBoolean? shared});
+  external factory MemoryDescriptor({
+    required JSNumber initial,
+    JSNumber? maximum,
+    JSBoolean? shared,
+  });
 }
 
 @JS('WebAssembly.Memory')
@@ -176,14 +190,18 @@ extension type WasmMemory._(JSObject _) implements JSObject {
   external JSArrayBuffer get buffer;
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_memoryConstructor);
+  static bool isInstance(JSAny? obj) =>
+      obj != null && obj.instanceof(_memoryConstructor);
 }
 
 @JS()
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type GlobalDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external factory GlobalDescriptor({required JSString value, JSBoolean mutable});
+  external factory GlobalDescriptor({
+    required JSString value,
+    JSBoolean mutable,
+  });
 }
 
 @JS('WebAssembly.Global')
@@ -194,14 +212,19 @@ extension type WasmGlobal._(JSObject _) implements JSObject {
   external JSNumber value;
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_globalConstructor);
+  static bool isInstance(JSAny? obj) =>
+      obj != null && obj.instanceof(_globalConstructor);
 }
 
 @JS()
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 extension type TableDescriptor._(JSObject _) implements JSObject {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  external factory TableDescriptor({required JSString element, required JSNumber initial, JSNumber? maximum});
+  external factory TableDescriptor({
+    required JSString element,
+    required JSNumber initial,
+    JSNumber? maximum,
+  });
 }
 
 @JS('WebAssembly.Table')
@@ -226,7 +249,8 @@ extension type WasmTable._(JSObject _) implements JSObject {
   external JSNumber grow(JSNumber delta);
 
   ///
-  static bool isInstance(JSAny? obj) => obj != null && obj.instanceof(_tableConstructor);
+  static bool isInstance(JSAny? obj) =>
+      obj != null && obj.instanceof(_tableConstructor);
 }
 
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -285,7 +309,10 @@ class Instance {
   }
 
   ///
-  static Future<Instance> loadfromUrl(String url, {Map<String, Map<String, JSAny?>> imports = const {}}) async {
+  static Future<Instance> loadfromUrl(
+    String url, {
+    Map<String, Map<String, JSAny?>> imports = const {},
+  }) async {
     final importsJs = _createJsImports(imports);
     final response = await _fetch(url.toJS).toDart;
     final native = await _instantiateStreaming(response, importsJs).toDart;
@@ -315,7 +342,10 @@ class Instance {
   ///
   /// The returned [Instance] object is used to access the exports of the
   /// module.
-  static Future<Instance> loadFromBinary(Uint8List wasmBinary, {Map<String, Map<String, JSAny?>> imports = const {}}) async {
+  static Future<Instance> loadFromBinary(
+    Uint8List wasmBinary, {
+    Map<String, Map<String, JSAny?>> imports = const {},
+  }) async {
     final importsJs = _createJsImports(imports);
 
     final native = await _instantiate(wasmBinary.toJS, importsJs).toDart;
@@ -338,7 +368,10 @@ class Instance {
   ///
   /// This function is useful if you want to load a wasm binary from a file, or
   /// from a bytes buffer.
-  static Instance loadFromBinarySync(Uint8List wasmBinary, {Map<String, Map<String, JSAny?>> imports = const {}}) {
+  static Instance loadFromBinarySync(
+    Uint8List wasmBinary, {
+    Map<String, Map<String, JSAny?>> imports = const {},
+  }) {
     final importsJs = _createJsImports(imports);
     final module = WasmModule.fromBytesOrBuffer(wasmBinary.toJS);
 

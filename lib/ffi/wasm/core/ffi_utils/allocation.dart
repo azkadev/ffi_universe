@@ -10,7 +10,7 @@ import '../ffi/types.dart';
 
 /// Uses global memory instance to manage memory.
 ///
-/// Does not initialize newly allocated memory to zero. Use [_CallocAllocator]
+/// Does not initialize newly allocated memory to zero. Use [CallocAllocator]
 /// for zero-initialized memory on allocation.
 final class MallocAllocator implements Allocator {
   const MallocAllocator._();
@@ -20,7 +20,10 @@ final class MallocAllocator implements Allocator {
   /// [alignment] is ignored.
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
-    final Pointer<T>? result = Memory.global?.allocate(byteCount, alignment: alignment);
+    final Pointer<T>? result = Memory.global?.allocate(
+      byteCount,
+      alignment: alignment,
+    );
     if (result == null || result.address == 0) {
       throw ArgumentError('Could not allocate $byteCount bytes.');
     }
@@ -35,7 +38,7 @@ final class MallocAllocator implements Allocator {
 
   /// Returns a pointer to a native free function.
   ///
-  /// This function can be used to release memory allocated by [allocated]
+  /// This function can be used to release memory allocated by 
   /// from the native side. It can also be used as a finalization callback
   /// passed to `NativeFinalizer` constructor or `Pointer.atTypedList`
   /// method.
@@ -86,14 +89,18 @@ final class CallocAllocator implements Allocator {
 
   /// Fills a block of memory with zeros.
   ///
-  void _zeroMemory(Pointer destination, int length) => _fillMemory(destination, length, 0);
+  void _zeroMemory(Pointer destination, int length) =>
+      _fillMemory(destination, length, 0);
 
   /// Allocates [byteCount] bytes of zero-initialized of memory on the native
   /// heap.
   /// [alignment] is ignored.
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
-    final Pointer<T>? result = Memory.global?.allocate(byteCount, alignment: alignment);
+    final Pointer<T>? result = Memory.global?.allocate(
+      byteCount,
+      alignment: alignment,
+    );
     if (result == null || result.address == 0) {
       throw ArgumentError('Could not allocate $byteCount bytes.');
     }
@@ -109,7 +116,7 @@ final class CallocAllocator implements Allocator {
 
   /// Returns a pointer to a native free function.
   ///
-  /// This function can be used to release memory allocated by [allocated]
+  /// This function can be used to release memory allocated by 
   /// from the native side. It can also be used as a finalization callback
   /// passed to `NativeFinalizer` constructor or `Pointer.atTypedList`
   /// method.

@@ -10,7 +10,8 @@ class NullMemory implements Memory {
   }
 
   @override
-  ByteBuffer get buffer => throw UnsupportedError('The null memory has no buffer!');
+  ByteBuffer get buffer =>
+      throw UnsupportedError('The null memory has no buffer!');
 
   @override
   void free(Pointer<NativeType> pointer) {

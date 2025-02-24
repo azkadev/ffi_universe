@@ -3,6 +3,7 @@
 /// This is quivalent to the `dart:ffi` package for the web platform.
 library;
 
+export "core/ffi/abi.dart";
 export 'core/ffi/allocation.dart';
 export 'core/ffi/dynamic_library.dart';
 export 'core/ffi/extensions.dart';

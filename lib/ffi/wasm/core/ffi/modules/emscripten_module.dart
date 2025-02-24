@@ -22,9 +22,9 @@ extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
   /// ignore: non_constant_identifier_names
   external JSUint8Array? get HEAPU8;
   ////
-  external JSObject? get asm; // Emscripten <3.1.44
+  external JSObject? get asm; // Emscripten \<3.1.44
   ////
-  external JSObject? get wasmExports; // Emscripten >=3.1.44
+  external JSObject? get wasmExports; // Emscripten \>=3.1.44
 
   /// Must have an unnamed factory constructor with named arguments.
   external factory EmscriptenModuleJs({JSUint8Array? wasmBinary});
@@ -48,7 +48,12 @@ FunctionDescription _fromWasmFunction(String name, JSFunction func) {
     if (index != null) {
       final int? argCount = funcDesc.length?.toDartInt;
       if (argCount != null) {
-        return FunctionDescription(tableIndex: index, name: name, function: func, argumentCount: argCount);
+        return FunctionDescription(
+          tableIndex: index,
+          name: name,
+          function: func,
+          argumentCount: argCount,
+        );
       } else {
         throw ArgumentError('$name does not seem to be a function symbol!');
       }
@@ -67,7 +72,9 @@ typedef EmscriptenModuleFunc = JSPromise<JSObject?> Function();
 @extra
 class EmscriptenModule extends Module {
   static EmscriptenModuleFunc _getModuleFunction(String moduleName) {
-    final JSFunction? moduleFunction = globalContext.getProperty(moduleName.toJS);
+    final JSFunction? moduleFunction = globalContext.getProperty(
+      moduleName.toJS,
+    );
     if (moduleFunction == null) {
       throw StateError('Could not find a emscripten module named $moduleName');
     }
@@ -77,7 +84,10 @@ class EmscriptenModule extends Module {
   }
 
   /// Documentation is in `emscripten_module_stub.dart`!
-  static Future<EmscriptenModule> compile(String moduleName, {void Function(EmscriptenModuleJs)? preinit}) async {
+  static Future<EmscriptenModule> compile(
+    String moduleName, {
+    void Function(EmscriptenModuleJs)? preinit,
+  }) async {
     final moduleFunction = _getModuleFunction(moduleName);
 
     final module = await moduleFunction().toDart;
@@ -101,7 +111,13 @@ class EmscriptenModule extends Module {
   @override
   WasmTable? get indirectFunctionTable => _indirectFunctionTable;
 
-  EmscriptenModule._(this._emscriptenModuleJs, this._exports, this._indirectFunctionTable, this._malloc, this._free);
+  EmscriptenModule._(
+    this._emscriptenModuleJs,
+    this._exports,
+    this._indirectFunctionTable,
+    this._malloc,
+    this._free,
+  );
 
   factory EmscriptenModule._fromJs(EmscriptenModuleJs module) {
     final asm = module.wasmExports ?? module.asm;
@@ -112,7 +128,7 @@ class EmscriptenModule extends Module {
       final List<WasmSymbol> exports = [];
       final List entries = WrappedJSObject.entries(asm).toDart;
       WasmTable? indirectFunctionTable;
-      // if (entries is List<Object>) {
+      // if (entries is List\<Object\>) {
       for (dynamic entry in entries) {
         if (entry is! List) {
           throw StateError("Unexpected entry in entries(Module['asm'])!");
@@ -123,22 +139,35 @@ class EmscriptenModule extends Module {
         }
         // Not sure if `value` can ever be `int` directly. I only
         // observed it being WebAssembly.Global for globals.
-        if (value is int || (WasmGlobal.isInstance(value as WasmGlobal) && value.value is int)) {
-          final int address = (value is int) ? value : ((value as WasmGlobal).value as int);
-          final Global g = Global(address: address, name: entry.first as String);
-          if (knownAddresses.containsKey(address) && knownAddresses[address] is! Global) {
+        if (value is int ||
+            (WasmGlobal.isInstance(value as WasmGlobal) &&
+                value.value is int)) {
+          final int address =
+              (value is int) ? value : ((value as WasmGlobal).value as int);
+          final Global g = Global(
+            address: address,
+            name: entry.first as String,
+          );
+          if (knownAddresses.containsKey(address) &&
+              knownAddresses[address] is! Global) {
             throw StateError(_adu(knownAddresses[address], g));
           }
           knownAddresses[address] = g;
           exports.add(g);
         } else if (value is Function) {
-          final FunctionDescription description = _fromWasmFunction(entry.first as String, value as JSFunction);
+          final FunctionDescription description = _fromWasmFunction(
+            entry.first as String,
+            value as JSFunction,
+          );
           // It might happen that there are two different c functions that do nothing else than calling the same underlying c function
           // In this case, a compiler might substitute both functions with the underlying c function
           // So we got two functions with different names at the same table index
           // So it is actually ok if there are two things at the same address, as long as they are both functions
-          if (knownAddresses.containsKey(description.tableIndex) && knownAddresses[description.tableIndex] is! FunctionDescription) {
-            throw StateError(_adu(knownAddresses[description.tableIndex], description));
+          if (knownAddresses.containsKey(description.tableIndex) &&
+              knownAddresses[description.tableIndex] is! FunctionDescription) {
+            throw StateError(
+              _adu(knownAddresses[description.tableIndex], description),
+            );
           }
           knownAddresses[description.tableIndex] = description;
           exports.add(description);
@@ -147,7 +176,8 @@ class EmscriptenModule extends Module {
           } else if (description.name == 'free') {
             free = description.function as _Free;
           }
-        } else if (WasmTable.isInstance(value as WasmTable) && entry.first as String == '__indirect_function_table') {
+        } else if (WasmTable.isInstance(value as WasmTable) &&
+            entry.first as String == '__indirect_function_table') {
           indirectFunctionTable = value as WasmTable;
         } else if (entry.first as String == 'memory') {
           // ignore memory object
@@ -163,7 +193,13 @@ class EmscriptenModule extends Module {
       if (free == null) {
         throw StateError('Module does not export the free function!');
       }
-      return EmscriptenModule._(module, exports, indirectFunctionTable, malloc, free);
+      return EmscriptenModule._(
+        module,
+        exports,
+        indirectFunctionTable,
+        malloc,
+        free,
+      );
     } else {
       _Malloc? malloc;
       _Free? free;
@@ -185,7 +221,12 @@ class EmscriptenModule extends Module {
           name = name.substring(1);
 
           final func = value as WrappedJSFunction;
-          final desc = FunctionDescription(tableIndex: exports.length, name: name, function: value as JSFunction, argumentCount: func.length?.toDartInt ?? 0);
+          final desc = FunctionDescription(
+            tableIndex: exports.length,
+            name: name,
+            function: value as JSFunction,
+            argumentCount: func.length?.toDartInt ?? 0,
+          );
           exports.add(desc);
 
           if (name == 'malloc') {
@@ -203,7 +244,13 @@ class EmscriptenModule extends Module {
       if (free == null) {
         throw StateError('Module does not export the free function!');
       }
-      return EmscriptenModule._(module, exports, indirectFunctionTable, malloc, free);
+      return EmscriptenModule._(
+        module,
+        exports,
+        indirectFunctionTable,
+        malloc,
+        free,
+      );
     }
   }
 
@@ -229,7 +276,7 @@ class EmscriptenModule extends Module {
   /// Throws an [ArgumentError] if it fails to lookup the symbol.
   ///
   /// While this method checks if the underyling wasm symbol is a actually
-  /// a function when you lookup a [NativeFunction]`<T>`, it does not check if
+  /// a function when you lookup a [NativeFunction]`\<T\>`, it does not check if
   /// the return type and parameters of `T` match the wasm function.
   @override
   Pointer<T> lookup<T extends NativeType>(String name, Memory memory) {
@@ -238,7 +285,9 @@ class EmscriptenModule extends Module {
       if (symbol is FunctionDescription) {
         return Pointer<T>.fromAddress(symbol.tableIndex, memory);
       } else {
-        throw ArgumentError('Tried to look up $name as a function, but it seems it is NOT a function!');
+        throw ArgumentError(
+          'Tried to look up $name as a function, but it seems it is NOT a function!',
+        );
       }
     } else {
       return Pointer<T>.fromAddress(symbol.address, memory);
@@ -251,7 +300,10 @@ class EmscriptenModule extends Module {
   bool providesSymbol(String symbolName) => throw UnimplementedError();
 
   @override
-  F lookupFunction<T extends Function, F extends Function>(String name, Memory memory) {
+  F lookupFunction<T extends Function, F extends Function>(
+    String name,
+    Memory memory,
+  ) {
     return lookup<NativeFunction<T>>(name, memory).asFunction<F>();
   }
 

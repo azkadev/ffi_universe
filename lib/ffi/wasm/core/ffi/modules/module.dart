@@ -5,6 +5,8 @@ import '../../js_utils/wasm_interop.dart' as interop;
 import '../annotations.dart';
 import '../memory.dart';
 import '../types.dart';
+import 'emscripten_module.dart';
+import 'standalone_module.dart';
 
 /// Base class to interact with the WebAssembly.
 ///
@@ -46,7 +48,7 @@ abstract class Module {
   /// Throws an [ArgumentError] if it fails to lookup the symbol.
   ///
   /// While this method checks if the underyling wasm symbol is a actually
-  /// a function when you lookup a [NativeFunction]`<T>`, it does not check if
+  /// a function when you lookup a [NativeFunction]`\<T\>`, it does not check if
   /// the return type and parameters of `T` match the wasm function.
   Pointer<T> lookup<T extends NativeType>(String name, Memory memory);
 
@@ -55,7 +57,10 @@ abstract class Module {
   bool providesSymbol(String symbolName);
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  F lookupFunction<T extends Function, F extends Function>(String name, Memory memory);
+  F lookupFunction<T extends Function, F extends Function>(
+    String name,
+    Memory memory,
+  );
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   interop.WasmTable? get indirectFunctionTable;
@@ -116,7 +121,12 @@ class FunctionDescription extends WasmSymbol {
   final JSFunction function;
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  const FunctionDescription({required int tableIndex, required super.name, required this.argumentCount, required this.function}) : super(address: tableIndex);
+  const FunctionDescription({
+    required int tableIndex,
+    required super.name,
+    required this.argumentCount,
+    required this.function,
+  }) : super(address: tableIndex);
 
   @override
   int get hashCode => '$name$argumentCount$tableIndex'.hashCode;
@@ -124,12 +134,15 @@ class FunctionDescription extends WasmSymbol {
   @override
   bool operator ==(Object other) {
     if (other is FunctionDescription) {
-      return argumentCount == other.argumentCount && name == other.name && tableIndex == other.tableIndex;
+      return argumentCount == other.argumentCount &&
+          name == other.name &&
+          tableIndex == other.tableIndex;
     } else {
       return false;
     }
   }
 
   @override
-  String toString() => '[tableIndex=$tableIndex\tname=$name\targumentCount=$argumentCount\tfunction=$function]';
+  String toString() =>
+      '[tableIndex=$tableIndex\tname=$name\targumentCount=$argumentCount\tfunction=$function]';
 }

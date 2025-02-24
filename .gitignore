@@ -29,3 +29,6 @@ packagex-compile-debug
 web_ffi/
 
 fork/
+examples/
+
+test/

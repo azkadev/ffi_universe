@@ -1,0 +1,13 @@
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi_utils/utf16.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi_utils/utf8.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi_utils/allocation.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/extensions.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/modules/emscripten_module.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/modules/standalone_module.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/modules/module.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/dynamic_library.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/types.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/annotations.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/native_finalizer.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/core/ffi/allocation.dart
+code /home/galaxeus/Documents/galaxeus/app/ffi_universe/lib/ffi/wasm/ffi/utf8.dart
