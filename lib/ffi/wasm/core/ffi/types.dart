@@ -178,7 +178,9 @@ final class Uint32 implements _NativeInteger {
 /// purely as marker in type signatures.
 @sealed
 @notConstructible
-final class Uint64 extends NativeType {}
+final class Uint64 implements _NativeInteger {
+  const Uint64();
+}
 
 /// Represents a native pointer-sized integer in C.
 ///
@@ -186,7 +188,9 @@ final class Uint64 extends NativeType {}
 /// purely as marker in type signatures.
 @sealed
 @notConstructible
-final class IntPtr extends NativeType {}
+final class IntPtr extends AbiSpecificInteger {
+  const IntPtr();
+}
 
 /// Represents a native pointer-sized unsigned integer in C.
 ///
@@ -1172,3 +1176,9 @@ final class _ArraySize<T extends NativeType> implements Array<T> {
   // ignore: unused_element
   Object get _typedDataBase => "";
 }
+
+
+///
+///
+
+

@@ -8,6 +8,7 @@ export 'core/ffi/allocation.dart';
 export 'core/ffi/dynamic_library.dart';
 export 'core/ffi/extensions.dart';
 export 'core/ffi/marshaller.dart' show registerOpaqueType;
+export "core/ffi/native_callable.dart";
 export 'core/ffi/native_finalizer.dart';
 export 'core/ffi/types.dart';
 

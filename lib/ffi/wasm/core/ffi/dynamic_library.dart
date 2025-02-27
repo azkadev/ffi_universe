@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
@@ -76,6 +77,16 @@ class WebModuleLoader implements ModuleLoader {
   }
 }
 
+class FfiUniverseDynamicLibrary {
+  static FutureOr<DynamicLibrary> openAsync({required String path}) async {
+    return await DynamicLibrary.openAsync(path);
+  }
+
+  static DynamicLibrary openSync({required String path}) {
+    return DynamicLibrary.open(path);
+  }
+}
+
 /// Represents a dynamically loaded C library.
 class DynamicLibrary {
   final Module _module;
@@ -120,16 +131,9 @@ class DynamicLibrary {
   /// Multiple loads of the same library file produces [DynamicLibrary] objects
   /// which are equal (`==`), but not [identical].
   @different
-  static Future<DynamicLibrary> open(
-    String modulePath, {
-    String? moduleName,
-    ModuleLoader? moduleLoader,
-    WasmType? wasmType,
-    GlobalMemory? useAsGlobal,
-  }) async {
+  static Future<DynamicLibrary> openAsync(String modulePath, {String? moduleName, ModuleLoader? moduleLoader, WasmType? wasmType, GlobalMemory? useAsGlobal}) async {
     /// 64-bit wasm is not supported
-    if (wasmType == WasmType.wasm64Standalone ||
-        wasmType == WasmType.wasm64Emscripten) {
+    if (wasmType == WasmType.wasm64Standalone || wasmType == WasmType.wasm64Emscripten) {
       throw UnsupportedError('64-bit wasm is not supported');
     }
 
@@ -196,6 +200,12 @@ class DynamicLibrary {
   ///
   /// This is not possible since explicit module is required
   @different
+  static DynamicLibrary open(String path) => throw UnimplementedError();
+
+  /// Emtpy stub for [DynamicLibrary.process]
+  ///
+  /// This is not possible since explicit module is required
+  @different
   static DynamicLibrary process() => throw UnimplementedError();
 
   /// Emtpy stub for [DynamicLibrary.executable]
@@ -211,8 +221,7 @@ class DynamicLibrary {
   /// While this method checks if the underyling wasm symbol is a actually
   /// a function when you lookup a [NativeFunction]`\<T\>`, it does not check if
   /// the return type and parameters of `T` match the wasm function.
-  Pointer<T> lookup<T extends NativeType>(String name) =>
-      _module.lookup(name, _memory);
+  Pointer<T> lookup<T extends NativeType>(String name) => _module.lookup(name, _memory);
 
   /// Checks whether this dynamic library provides a symbol with the given
   /// name.
@@ -234,6 +243,5 @@ class DynamicLibrary {
   ///
   /// This simply calls [DynamicLibrary.lookup] and
   /// internally, so see this two methods for additional insights.
-  F lookupFunction<T extends Function, F extends Function>(String name) =>
-      _module.lookupFunction(name, _memory);
+  F lookupFunction<T extends Function, F extends Function>(String name, {bool isLeaf = false}) => _module.lookupFunction(name, _memory);
 }
