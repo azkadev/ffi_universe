@@ -110,7 +110,7 @@ class Abi {
     macosX64,
     windowsArm64,
     windowsIA32,
-    windowsX64,
+    windowsX64
   ];
 
   /// The ABI the Dart VM is currently running on.

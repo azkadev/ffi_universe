@@ -53,8 +53,7 @@ void initTypes([int pointerSizeBytes = 4]) {
   if (registeredPointerSizeBytes != null) {
     if (registeredPointerSizeBytes != pointerSizeBytes) {
       throw MarshallingException(
-        'Can not change pointer size after it was set to $registeredPointerSizeBytes!',
-      );
+          'Can not change pointer size after it was set to $registeredPointerSizeBytes!');
     }
     return;
   }
@@ -96,9 +95,7 @@ T execute<T>(Function base, List<Object> args, Memory memory) {
 
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 DF marshall<NF extends Function, DF extends Function>(
-  Function base,
-  Memory memory,
-) {
+    Function base, Memory memory) {
   return _inferFromSignature(DF.toString()).copyWith(base, memory).run as DF;
 }
 
@@ -109,8 +106,7 @@ Object _toJsType(Object dartObject) {
     return dartObject.address;
   } else {
     throw MarshallingException(
-      'Could not convert dart type ${dartObject.runtimeType} to a JavaScript type!',
-    );
+        'Could not convert dart type ${dartObject.runtimeType} to a JavaScript type!');
   }
 }
 
@@ -133,13 +129,13 @@ InvokeHelper _inferFromSignature(String signature) {
       );
     } else {
       throw MarshallingException(
-        'Unknown type $returnType (infered from $signature), all marshallable types: ${listKnownTypes()}',
-      );
+          'Unknown type $returnType (infered from $signature), all marshallable types: ${listKnownTypes()}');
     }
   }
 }
 
 @visibleForTesting
+
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 List<String> listKnownTypes() =>
     List<String>.of(_knownTypes.keys, growable: false);
@@ -148,14 +144,14 @@ final Map<String, InvokeHelper> _knownTypes = {
   typeString<int>(): const InvokeHelper<int>(null, null),
   typeString<double>(): const InvokeHelper<double>(null, null),
   typeString<bool>(): const InvokeHelper<bool>(null, null),
-  typeString<void>(): const InvokeHelper<void>(null, null),
+  typeString<void>(): const InvokeHelper<void>(null, null)
 };
 
 final Map<String, Function> _knownTypes2 = {
   typeString<int>(): (Object o, Memory b) => _toDartType<int>(o, b),
   typeString<double>(): (Object o, Memory b) => _toDartType<double>(o, b),
   typeString<bool>(): (Object o, Memory b) => _toDartType<bool>(o, b),
-  typeString<void>(): (Object o, Memory b) => _toDartType<void>(o, b),
+  typeString<void>(): (Object o, Memory b) => _toDartType<void>(o, b)
 };
 
 void _registerNativeMarshallerType<T extends NativeType>() {
@@ -170,15 +166,12 @@ void _registerNativeMarshallerType<T extends NativeType>() {
 
 void _registerNativeMarshallerOpaque<T extends Opaque>() {
   _knownTypes[typeString<Pointer<T>>()] = OpaqueInvokeHelper<T>(null, null);
-  _knownTypes[typeString<Pointer<Pointer<T>>>()] = OpaqueInvokeHelperSquare<T>(
-    null,
-    null,
-  );
+  _knownTypes[typeString<Pointer<Pointer<T>>>()] =
+      OpaqueInvokeHelperSquare<T>(null, null);
   _knownTypes2[typeString<Pointer<T>>()] =
       (Object o, Memory b) => _toDartType<Pointer<Opaque>>(o, b).cast<T>();
-  _knownTypes2[typeString<Pointer<Pointer<T>>>()] =
-      (Object o, Memory b) =>
-          _toDartType<Pointer<Pointer<Opaque>>>(o, b).cast<Pointer<T>>();
+  _knownTypes2[typeString<Pointer<Pointer<T>>>()] = (Object o, Memory b) =>
+      _toDartType<Pointer<Pointer<Opaque>>>(o, b).cast<Pointer<T>>();
 }
 
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -431,8 +424,7 @@ T _toDartType<T>(Object o, Memory bind) {
         }
       } else {
         throw MarshallingException(
-          'Can not back-marshall to type $T (object type is ${o.runtimeType})',
-        );
+            'Can not back-marshall to type $T (object type is ${o.runtimeType})');
       }
     }
   }

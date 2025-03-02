@@ -12,15 +12,13 @@ class VectorFfiUniverseUtils {
   ///
   /// to = std::vector\<char\> argv[1] = {"hello"}
   ///
-  static Pointer<Pointer<Char>> fromListStringToVectorChar({
-    required List<String> strings,
-  }) {
+  static Pointer<Pointer<Char>> fromListStringToVectorChar(
+      {required List<String> strings}) {
     final List<Pointer<Char>> utf8PointerList =
         strings.map((str) => str.toNativeUtf8().cast<Char>()).toList();
 
-    final Pointer<Pointer<Char>> pointerPointer = malloc.allocate(
-      utf8PointerList.length,
-    );
+    final Pointer<Pointer<Char>> pointerPointer =
+        malloc.allocate(utf8PointerList.length);
     strings.asMap().forEach((index, utf) {
       pointerPointer[index] = utf8PointerList[index];
     });
@@ -34,14 +32,12 @@ class VectorFfiUniverseUtils {
   ///
   /// to = std::vector\<string\> argv[1] = {"hello"}
   ///
-  static Pointer<Pointer<Utf8>> fromListStringToVectorString({
-    required List<String> strings,
-  }) {
+  static Pointer<Pointer<Utf8>> fromListStringToVectorString(
+      {required List<String> strings}) {
     final List<Pointer<Utf8>> utf8PointerList =
         strings.map((str) => str.toNativeUtf8()).toList();
-    final Pointer<Pointer<Utf8>> pointerPointer = malloc.allocate(
-      utf8PointerList.length,
-    );
+    final Pointer<Pointer<Utf8>> pointerPointer =
+        malloc.allocate(utf8PointerList.length);
     strings.asMap().forEach((index, utf) {
       pointerPointer[index] = utf8PointerList[index];
     });

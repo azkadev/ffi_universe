@@ -26,21 +26,19 @@ bool isImported(String url) {
   return _isLoaded(_htmlHead(), url);
 }
 
-HTMLScriptElement _createScriptTagFromUrl(String library) =>
-    HTMLScriptElement()
-      ..type = 'text/javascript'
-      ..charset = 'utf-8'
-      ..async = true
-      //..defer = true
-      ..src = library;
+HTMLScriptElement _createScriptTagFromUrl(String library) => HTMLScriptElement()
+  ..type = 'text/javascript'
+  ..charset = 'utf-8'
+  ..async = true
+  //..defer = true
+  ..src = library;
 
-HTMLScriptElement _createScriptTagFromSrc(String src) =>
-    HTMLScriptElement()
-      ..type = 'text/javascript'
-      ..charset = 'utf-8'
-      ..async = false
-      //..defer = true
-      ..innerText = src;
+HTMLScriptElement _createScriptTagFromSrc(String src) => HTMLScriptElement()
+  ..type = 'text/javascript'
+  ..charset = 'utf-8'
+  ..async = false
+  //..defer = true
+  ..innerText = src;
 
 Future<void> _importJsLibraries(List<String> libraries) {
   final List<Future<void>> loading = <Future<void>>[];

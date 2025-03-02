@@ -20,10 +20,8 @@ final class MallocAllocator implements Allocator {
   /// [alignment] is ignored.
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
-    final Pointer<T>? result = Memory.global?.allocate(
-      byteCount,
-      alignment: alignment,
-    );
+    final Pointer<T>? result =
+        Memory.global?.allocate(byteCount, alignment: alignment);
     if (result == null || result.address == 0) {
       throw ArgumentError('Could not allocate $byteCount bytes.');
     }
@@ -97,10 +95,8 @@ final class CallocAllocator implements Allocator {
   /// [alignment] is ignored.
   @override
   Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
-    final Pointer<T>? result = Memory.global?.allocate(
-      byteCount,
-      alignment: alignment,
-    );
+    final Pointer<T>? result =
+        Memory.global?.allocate(byteCount, alignment: alignment);
     if (result == null || result.address == 0) {
       throw ArgumentError('Could not allocate $byteCount bytes.');
     }

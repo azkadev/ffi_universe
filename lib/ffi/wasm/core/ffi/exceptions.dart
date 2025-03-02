@@ -14,11 +14,11 @@ class MarshallingException implements Exception {
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   MarshallingException.noAddress(Object o)
-    : this('Expected a address (int) but found ${o.runtimeType}');
+      : this('Expected a address (int) but found ${o.runtimeType}');
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   MarshallingException.typeMissmatch(Type t, Object o)
-    : this('Expected a type of $t but object has type ${o.runtimeType}');
+      : this('Expected a type of $t but object has type ${o.runtimeType}');
 
   @override
   String toString() => Exception(message).toString();

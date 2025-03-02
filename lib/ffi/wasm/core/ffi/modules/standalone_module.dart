@@ -9,6 +9,7 @@ import '../types.dart';
 import 'module.dart';
 
 @extra
+
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class StandaloneWasmModule extends Module {
   final Instance _instance;
@@ -24,21 +25,17 @@ class StandaloneWasmModule extends Module {
   }
 
   FunctionDescription _fromWasmFunction(
-    String name,
-    JSFunction func,
-    int index,
-  ) {
+      String name, JSFunction func, int index) {
     final funcDesc = func as WrappedJSFunction;
 
     if (funcDesc.name != null) {
       final length = funcDesc.length;
       if (length != null) {
         return FunctionDescription(
-          tableIndex: index,
-          name: name,
-          function: func,
-          argumentCount: length.toDartInt,
-        );
+            tableIndex: index,
+            name: name,
+            function: func,
+            argumentCount: length.toDartInt);
       }
     }
     throw ArgumentError('$name does not seem to be a function symbol!');
@@ -91,8 +88,7 @@ class StandaloneWasmModule extends Module {
         return Pointer<T>.fromAddress(symbol.tableIndex, memory);
       } else {
         throw ArgumentError(
-          'Tried to look up $name as a function, but it seems it is NOT a function!',
-        );
+            'Tried to look up $name as a function, but it seems it is NOT a function!');
       }
     } else {
       return Pointer<T>.fromAddress(symbol.address, memory);
@@ -106,9 +102,7 @@ class StandaloneWasmModule extends Module {
 
   @override
   F lookupFunction<T extends Function, F extends Function>(
-    String name,
-    Memory memory,
-  ) {
+      String name, Memory memory) {
     return _instance.functions[name]! as F;
   }
 }

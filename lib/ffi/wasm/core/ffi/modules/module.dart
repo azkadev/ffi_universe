@@ -58,9 +58,7 @@ abstract class Module {
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   F lookupFunction<T extends Function, F extends Function>(
-    String name,
-    Memory memory,
-  );
+      String name, Memory memory);
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   interop.WasmTable? get indirectFunctionTable;
@@ -121,12 +119,12 @@ class FunctionDescription extends WasmSymbol {
   final JSFunction function;
 
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  const FunctionDescription({
-    required int tableIndex,
-    required super.name,
-    required this.argumentCount,
-    required this.function,
-  }) : super(address: tableIndex);
+  const FunctionDescription(
+      {required int tableIndex,
+      required super.name,
+      required this.argumentCount,
+      required this.function})
+      : super(address: tableIndex);
 
   @override
   int get hashCode => '$name$argumentCount$tableIndex'.hashCode;

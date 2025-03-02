@@ -1,4 +1,3 @@
-
 import 'types.dart';
 
 /// A native callable which listens for calls to a native function.
@@ -28,7 +27,7 @@ abstract final class NativeCallable<T extends Function> {
   /// After [NativeCallable.close] is called, invoking the [nativeFunction] from
   /// native code will cause undefined behavior.
   factory NativeCallable.isolateLocal(
-    // @DartRepresentationOf("T") 
+    // @DartRepresentationOf("T")
     Function callback, {
     Object? exceptionalReturn,
   }) {
@@ -103,7 +102,7 @@ abstract final class NativeCallable<T extends Function> {
   /// ```
   factory NativeCallable.listener(
     // @DartRepresentationOf("T")
-     Function callback,
+    Function callback,
   ) {
     throw UnsupportedError("NativeCallable cannot be constructed dynamically.");
   }

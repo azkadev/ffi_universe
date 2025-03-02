@@ -104,8 +104,7 @@ class Arena implements Allocator {
   void _ensureInUse() {
     if (!_inUse) {
       throw StateError(
-        'Arena no longer in use, `releaseAll(reuse: false)` was called.',
-      );
+          'Arena no longer in use, `releaseAll(reuse: false)` was called.');
     }
   }
 }
@@ -118,10 +117,8 @@ class Arena implements Allocator {
 ///
 /// If the isolate is shut down, through `Isolate.kill()`, resources are _not_
 /// cleaned up.
-R using<R>(
-  R Function(Arena) computation, [
-  Allocator wrappedAllocator = calloc,
-]) {
+R using<R>(R Function(Arena) computation,
+    [Allocator wrappedAllocator = calloc]) {
   final arena = Arena(wrappedAllocator);
   var isAsync = false;
   try {
@@ -144,10 +141,8 @@ R using<R>(
 ///
 /// If the isolate is shut down, through `Isolate.kill()`, resources are _not_
 /// cleaned up.
-R withZoneArena<R>(
-  R Function() computation, [
-  Allocator wrappedAllocator = calloc,
-]) {
+R withZoneArena<R>(R Function() computation,
+    [Allocator wrappedAllocator = calloc]) {
   final arena = Arena(wrappedAllocator);
   final arenaHolder = [arena];
   var isAsync = false;

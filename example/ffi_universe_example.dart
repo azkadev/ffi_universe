@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:ffi_universe/ffi_universe.dart';
 
-typedef MainFunctionNative =
-    Int Function(Int argc, Pointer<Pointer<Char>> argv);
+typedef MainFunctionNative = Int Function(
+    Int argc, Pointer<Pointer<Char>> argv);
 typedef MainFunctionDart = int Function(int argc, Pointer<Pointer<Char>> argv);
 
 typedef TestFunctionNative = Void Function(Pointer<Char> text);
@@ -12,9 +12,8 @@ typedef InvokeFunctionNative = Pointer<Char> Function(Pointer<Char> parameters);
 typedef InvokeFunctionDart = Pointer<Char> Function(Pointer<Char> parameters);
 
 void main() async {
-  final DynamicLibrary dynamicLibrary = await FFIUniverse.open(
-    path: "libraryname",
-  );
+  final DynamicLibrary dynamicLibrary =
+      await FFIUniverse.open(path: "libraryname");
 
   /// main_function
   {
@@ -41,9 +40,8 @@ void main() async {
         json.encode(parameters).toNativeUtf8();
     final InvokeFunctionDart invokeFunction = dynamicLibrary
         .lookupFunction<InvokeFunctionNative, InvokeFunctionDart>("invoke");
-    final Pointer<Char> resultInvoke = invokeFunction(
-      parametersNative.cast<Char>(),
-    );
+    final Pointer<Char> resultInvoke =
+        invokeFunction(parametersNative.cast<Char>());
     print(resultInvoke.cast<Utf8>().toDartString());
     malloc.free(parametersNative);
   }

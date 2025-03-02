@@ -42,6 +42,7 @@ enum WasmType {
 /// Used on [DynamicLibrary] creation to control if the therby newly created
 /// [Memory] object should be registered as [Memory.global].
 @extra
+
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 enum GlobalMemory {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -77,11 +78,14 @@ class WebModuleLoader implements ModuleLoader {
   }
 }
 
+/// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
 class FfiUniverseDynamicLibrary {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   static FutureOr<DynamicLibrary> openAsync({required String path}) async {
     return await DynamicLibrary.openAsync(path);
   }
 
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   static DynamicLibrary openSync({required String path}) {
     return DynamicLibrary.open(path);
   }
@@ -131,9 +135,14 @@ class DynamicLibrary {
   /// Multiple loads of the same library file produces [DynamicLibrary] objects
   /// which are equal (`==`), but not [identical].
   @different
-  static Future<DynamicLibrary> openAsync(String modulePath, {String? moduleName, ModuleLoader? moduleLoader, WasmType? wasmType, GlobalMemory? useAsGlobal}) async {
+  static Future<DynamicLibrary> openAsync(String modulePath,
+      {String? moduleName,
+      ModuleLoader? moduleLoader,
+      WasmType? wasmType,
+      GlobalMemory? useAsGlobal}) async {
     /// 64-bit wasm is not supported
-    if (wasmType == WasmType.wasm64Standalone || wasmType == WasmType.wasm64Emscripten) {
+    if (wasmType == WasmType.wasm64Standalone ||
+        wasmType == WasmType.wasm64Emscripten) {
       throw UnsupportedError('64-bit wasm is not supported');
     }
 
@@ -221,7 +230,8 @@ class DynamicLibrary {
   /// While this method checks if the underyling wasm symbol is a actually
   /// a function when you lookup a [NativeFunction]`\<T\>`, it does not check if
   /// the return type and parameters of `T` match the wasm function.
-  Pointer<T> lookup<T extends NativeType>(String name) => _module.lookup(name, _memory);
+  Pointer<T> lookup<T extends NativeType>(String name) =>
+      _module.lookup(name, _memory);
 
   /// Checks whether this dynamic library provides a symbol with the given
   /// name.
@@ -243,5 +253,7 @@ class DynamicLibrary {
   ///
   /// This simply calls [DynamicLibrary.lookup] and
   /// internally, so see this two methods for additional insights.
-  F lookupFunction<T extends Function, F extends Function>(String name, {bool isLeaf = false}) => _module.lookupFunction(name, _memory);
+  F lookupFunction<T extends Function, F extends Function>(String name,
+          {bool isLeaf = false}) =>
+      _module.lookupFunction(name, _memory);
 }

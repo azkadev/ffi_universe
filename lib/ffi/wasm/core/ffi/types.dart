@@ -179,6 +179,7 @@ final class Uint32 implements _NativeInteger {
 @sealed
 @notConstructible
 final class Uint64 implements _NativeInteger {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   const Uint64();
 }
 
@@ -189,6 +190,7 @@ final class Uint64 implements _NativeInteger {
 @sealed
 @notConstructible
 final class IntPtr extends AbiSpecificInteger {
+  /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
   const IntPtr();
 }
 
@@ -294,12 +296,10 @@ typedef WChar = Int32;
 @sealed
 final class Pointer<T extends NativeType> extends NativeType {
   /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
-  static Pointer<NativeFunction<T>> fromFunction<T extends Function>(
-    Function f, [
-    Object? exceptionalReturn,
-    Memory? bindToMemory,
-    WasmTable? bindToTable,
-  ]) {
+  static Pointer<NativeFunction<T>> fromFunction<T extends Function>(Function f,
+      [Object? exceptionalReturn,
+      Memory? bindToMemory,
+      WasmTable? bindToTable]) {
     final Memory? memory = bindToMemory ?? Memory.global;
     final WasmTable? table = bindToTable ?? WasmTable.global;
     return pointerFromFunctionImpl(f, table!, memory!);
@@ -332,8 +332,7 @@ final class Pointer<T extends NativeType> extends NativeType {
     final Memory? memory = bindTo ?? Memory.global;
     if (memory == null) {
       throw StateError(
-        'No global memory set and no explcity memory to bind to given!',
-      );
+          'No global memory set and no explcity memory to bind to given!');
     }
     return Pointer._(ptr, memory, _isUnsizedType<T>() ? null : sizeOf<T>());
   }
@@ -342,10 +341,7 @@ final class Pointer<T extends NativeType> extends NativeType {
 
   /// Casts this pointer to an other type.
   Pointer<U> cast<U extends NativeType>() => Pointer<U>._(
-    address,
-    boundMemory,
-    _isUnsizedType<U>() ? null : sizeOf<U>(),
-  );
+      address, boundMemory, _isUnsizedType<U>() ? null : sizeOf<U>());
 
   /// Pointer arithmetic (takes element size into account).
   ///
@@ -403,10 +399,9 @@ JSFunction _toWasmFunction(String signature, Function func) {
   };
 
   // ignore: prefer_function_declarations_over_variables
-  final encodeArgTypes =
-      (String types) => [
+  final encodeArgTypes = (String types) => [
         types.length,
-        ...types.runes.map((c) => typeCodes[String.fromCharCode(c)]!),
+        ...types.runes.map((c) => typeCodes[String.fromCharCode(c)]!)
       ];
   // ignore: prefer_function_declarations_over_variables
   final encodeSection =
@@ -474,9 +469,8 @@ String _getWasmSignature<T extends Function>() {
   final List<String> dartSignature = typeString<T>().split('=>');
   final String retType = dartSignature.last.trim();
   final String argTypes = dartSignature.first.trim();
-  final List<String> argTypesList = argTypes
-      .substring(1, argTypes.length - 1)
-      .split(', ');
+  final List<String> argTypesList =
+      argTypes.substring(1, argTypes.length - 1).split(', ');
 
   developer.log('types: $retType $argTypesList');
   developer.log('sigs: ${signatures.keys}');
@@ -495,9 +489,8 @@ final List<Function Function(Function)> callbackHelpers = [
   (Function func) => (arg1, arg2, arg3, arg4) => func([arg1, arg2, arg3, arg4]),
   (Function func) =>
       (arg1, arg2, arg3, arg4, arg5) => func([arg1, arg2, arg3, arg4, arg5]),
-  (Function func) =>
-      (arg1, arg2, arg3, arg4, arg5, arg6) =>
-          func([arg1, arg2, arg3, arg4, arg5, arg6]),
+  (Function func) => (arg1, arg2, arg3, arg4, arg5, arg6) =>
+      func([arg1, arg2, arg3, arg4, arg5, arg6]),
 ];
 
 /// General Library Documentation Undocument By General Corporation & Global Corporation & General Developer
@@ -520,49 +513,42 @@ Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
   // garbage collect
 
   return exportedFunctions.putIfAbsent(func, () {
-        developer.log('marshal from: ${func.runtimeType} to $T');
-        final String dartSignature = func.runtimeType.toString();
-        final String argTypes = dartSignature.split('=>').first.trim();
-        final List<String> argT = argTypes
-            .substring(1, argTypes.length - 1)
-            .split(', ');
-        developer.log('arg types: $argT');
-        final List<Function> marshallers =
-            argTypes
-                .substring(1, argTypes.length - 1)
-                .split(', ')
-                .map((arg) => marshaller(arg))
-                .toList();
+    developer.log('marshal from: ${func.runtimeType} to $T');
+    final String dartSignature = func.runtimeType.toString();
+    final String argTypes = dartSignature.split('=>').first.trim();
+    final List<String> argT =
+        argTypes.substring(1, argTypes.length - 1).split(', ');
+    developer.log('arg types: $argT');
+    final List<Function> marshallers = argTypes
+        .substring(1, argTypes.length - 1)
+        .split(', ')
+        .map((arg) => marshaller(arg))
+        .toList();
 
-        final String wasmSignature = _getWasmSignature<T>();
+    final String wasmSignature = _getWasmSignature<T>();
 
-        developer.log('wasm sig: $wasmSignature');
+    developer.log('wasm sig: $wasmSignature');
 
-        // ignore: prefer_function_declarations_over_variables
-        final Function wrapper1 = (List args) {
-          developer.log('wrapper of $T called with $args');
-          final marshalledArgs =
-              marshallers.mapIndexed((i, m) => m(args[i], memory)).toList();
-          developer.log('which is $marshalledArgs on $func');
-          Function.apply(func, marshalledArgs);
-          developer.log('done!');
-        };
-        final Function wrapper2 = callbackHelpers[argT.length](wrapper1);
+    // ignore: prefer_function_declarations_over_variables
+    final Function wrapper1 = (List args) {
+      developer.log('wrapper of $T called with $args');
+      final marshalledArgs =
+          marshallers.mapIndexed((i, m) => m(args[i], memory)).toList();
+      developer.log('which is $marshalledArgs on $func');
+      Function.apply(func, marshalledArgs);
+      developer.log('done!');
+    };
+    final Function wrapper2 = callbackHelpers[argT.length](wrapper1);
 
-        // theFunctions.add(wrapper);
+    // theFunctions.add(wrapper);
 
-        final wasmFunc = _toWasmFunction(wasmSignature, wrapper2);
-        table.grow(1.toJS);
-        table.set((table.length.toDartInt - 1).toJS, wasmFunc);
-        developer.log(
-          'created callback with index ${table.length.toDartInt - 1}',
-        );
-        return Pointer<NativeFunction<T>>.fromAddress(
-          table.length.toDartInt - 1,
-          memory,
-        );
-      })
-      as Pointer<NativeFunction<T>>;
+    final wasmFunc = _toWasmFunction(wasmSignature, wrapper2);
+    table.grow(1.toJS);
+    table.set((table.length.toDartInt - 1).toJS, wasmFunc);
+    developer.log('created callback with index ${table.length.toDartInt - 1}');
+    return Pointer<NativeFunction<T>>.fromAddress(
+        table.length.toDartInt - 1, memory);
+  }) as Pointer<NativeFunction<T>>;
 }
 
 ///
@@ -591,8 +577,8 @@ final class _Compound implements NativeType {
   final int _offsetInBytes;
 
   _Compound._([int? offsetInBytes, Object? typedDataBase])
-    : _typedDataBase = typedDataBase ?? "",
-      _offsetInBytes = offsetInBytes ?? 0 {
+      : _typedDataBase = typedDataBase ?? "",
+        _offsetInBytes = offsetInBytes ?? 0 {
     throw UnimplementedError();
   }
 
@@ -604,17 +590,16 @@ final class _Compound implements NativeType {
   /// The length in bytes of [typedData] must at least be [sizeInBytes].
   @pragma('vm:prefer-inline')
   _Compound._fromTypedData(TypedData typedData, int offset, int sizeInBytes)
-    : _typedDataBase = typedData,
-      _offsetInBytes = typedData.elementSizeInBytes * offset {
+      : _typedDataBase = typedData,
+        _offsetInBytes = typedData.elementSizeInBytes * offset {
     if (typedData.lengthInBytes <
         typedData.elementSizeInBytes * offset + sizeInBytes) {
       throw RangeError.range(
-        typedData.lengthInBytes,
-        sizeInBytes + typedData.elementSizeInBytes * offset,
-        null,
-        'typedData.lengthInBytes',
-        'The typed list is not large enough',
-      );
+          typedData.lengthInBytes,
+          sizeInBytes + typedData.elementSizeInBytes * offset,
+          null,
+          'typedData.lengthInBytes',
+          'The typed list is not large enough');
     }
   }
 }
@@ -732,7 +717,7 @@ abstract base class Struct extends _Compound implements SizedNativeType {
   // @pragma('vm:prefer-inline')
   // ignore: unused_element
   Struct._fromTypedDataBase(super._typedDataBase, super._offsetInBytes)
-    : super._fromTypedDataBase();
+      : super._fromTypedDataBase();
 
   /// Creates a view on [typedData].
   ///
@@ -742,7 +727,7 @@ abstract base class Struct extends _Compound implements SizedNativeType {
   // @pragma('vm:prefer-inline')
   // ignore: unused_element
   Struct._fromTypedData(super.typedData, super.offset, super.sizeInBytes)
-    : super._fromTypedData();
+      : super._fromTypedData();
 }
 
 /// Annotation to specify on `Struct` subtypes to indicate that its members
@@ -898,7 +883,7 @@ abstract base class Union extends _Compound implements SizedNativeType {
   /// Used in , FFI calls, and FFI callbacks.
   // ignore: unused_element
   Union._fromTypedDataBase(super._typedDataBase, super._offsetInBytes)
-    : super._fromTypedDataBase();
+      : super._fromTypedDataBase();
 
   /// Creates a view on [typedData].
   ///
@@ -907,7 +892,7 @@ abstract base class Union extends _Compound implements SizedNativeType {
   /// Used in the `external` public constructor of [Union].
   // ignore: unused_element
   Union._fromTypedData(super.typedData, super.offset, super.sizeInBytes)
-    : super._fromTypedData();
+      : super._fromTypedData();
 }
 
 ///
@@ -934,13 +919,11 @@ final class Array<T extends NativeType> extends _Compound {
   /// ```
   ///
   /// Do not invoke in normal code.
-  const factory Array(
-    int dimension1, [
-    int dimension2,
-    int dimension3,
-    int dimension4,
-    int dimension5,
-  ]) = _ArraySize<T>;
+  const factory Array(int dimension1,
+      [int dimension2,
+      int dimension3,
+      int dimension4,
+      int dimension5]) = _ArraySize<T>;
 
   /// Annotation to specify [Array] dimensions in [Struct]s.
   ///
@@ -1020,12 +1003,11 @@ final class Array<T extends NativeType> extends _Compound {
   ///
   /// Do not invoke in normal code.
   // @Since('3.6')
-  const factory Array.variable([
-    int dimension2,
-    int dimension3,
-    int dimension4,
-    int dimension5,
-  ]) = _ArraySize<T>.variable;
+  const factory Array.variable(
+      [int dimension2,
+      int dimension3,
+      int dimension4,
+      int dimension5]) = _ArraySize<T>.variable;
 
   /// Annotation to specify a variable length [Array] with a configurable
   /// variable dimension ([dimension1]) in [Struct]s.
@@ -1064,13 +1046,12 @@ final class Array<T extends NativeType> extends _Compound {
   ///
   /// Do not invoke in normal code.
   // @Since('3.7')
-  const factory Array.variableWithVariableDimension([
-    int dimension1,
-    int dimension2,
-    int dimension3,
-    int dimension4,
-    int dimension5,
-  ]) = _ArraySize<T>.variableWithVariableDimension;
+  const factory Array.variableWithVariableDimension(
+      [int dimension1,
+      int dimension2,
+      int dimension3,
+      int dimension4,
+      int dimension5]) = _ArraySize<T>.variableWithVariableDimension;
 
   /// Annotation to a variable length [Array] in [Struct]s.
   ///
@@ -1120,52 +1101,44 @@ final class _ArraySize<T extends NativeType> implements Array<T> {
   // be prepended with this value.
   final int? variableDimension;
 
-  const _ArraySize(
-    this.dimension1, [
-    this.dimension2,
-    this.dimension3,
-    this.dimension4,
-    this.dimension5,
-  ]) : dimensions = null,
-       variableDimension = null;
+  const _ArraySize(this.dimension1,
+      [this.dimension2, this.dimension3, this.dimension4, this.dimension5])
+      : dimensions = null,
+        variableDimension = null;
 
   const _ArraySize.multi(this.dimensions)
-    : dimension1 = null,
-      dimension2 = null,
-      dimension3 = null,
-      dimension4 = null,
-      dimension5 = null,
-      variableDimension = null;
+      : dimension1 = null,
+        dimension2 = null,
+        dimension3 = null,
+        dimension4 = null,
+        dimension5 = null,
+        variableDimension = null;
 
-  const _ArraySize.variable([
-    this.dimension2,
-    this.dimension3,
-    this.dimension4,
-    this.dimension5,
-  ]) : dimension1 = 0,
-       dimensions = null,
-       variableDimension = 0;
+  const _ArraySize.variable(
+      [this.dimension2, this.dimension3, this.dimension4, this.dimension5])
+      : dimension1 = 0,
+        dimensions = null,
+        variableDimension = 0;
 
-  const _ArraySize.variableWithVariableDimension([
-    this.dimension1,
-    this.dimension2,
-    this.dimension3,
-    this.dimension4,
-    this.dimension5,
-  ]) : dimensions = null,
-       variableDimension = dimension1;
+  const _ArraySize.variableWithVariableDimension(
+      [this.dimension1,
+      this.dimension2,
+      this.dimension3,
+      this.dimension4,
+      this.dimension5])
+      : dimensions = null,
+        variableDimension = dimension1;
 
-  const _ArraySize.variableMulti(
-    List<int> nestedDimensions, {
-    int variableDimension = 0,
-  }) : // Should be `[variableDimension, ...nestedDimensions]`.
-       dimensions = nestedDimensions,
-       dimension1 = null,
-       dimension2 = null,
-       dimension3 = null,
-       dimension4 = null,
-       dimension5 = null,
-       variableDimension = variableDimension;
+  const _ArraySize.variableMulti(List<int> nestedDimensions,
+      {int variableDimension = 0})
+      : // Should be `[variableDimension, ...nestedDimensions]`.
+        dimensions = nestedDimensions,
+        dimension1 = null,
+        dimension2 = null,
+        dimension3 = null,
+        dimension4 = null,
+        dimension5 = null,
+        variableDimension = variableDimension;
 
   // uncompleted
   @override
@@ -1177,8 +1150,5 @@ final class _ArraySize<T extends NativeType> implements Array<T> {
   Object get _typedDataBase => "";
 }
 
-
 ///
 ///
-
-
